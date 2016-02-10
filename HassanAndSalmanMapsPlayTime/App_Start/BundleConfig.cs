@@ -45,7 +45,8 @@ namespace HassanAndSalmanMapsPlayTime
                 "~/Scripts/moment-with-locales.js",
                 "~/Scripts/datetimepicker.js",
                 "~/app/lib/spin.js/spin.js",
-                "~/app/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"));
+                "~/app/lib/angular-bootstrap/ui-bootstrap-tpls.min.js",
+                "~/app/lib/ngMap/ng-map.min.js"));
         }
     }
 }

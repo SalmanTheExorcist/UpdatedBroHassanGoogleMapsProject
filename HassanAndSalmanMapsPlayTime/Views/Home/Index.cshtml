@@ -1,11 +1,33 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    ViewBag.InitModule = "homeIndex";
 }
 
-<div class="jumbotron">
-    <h2>@ViewBag.Title.</h2>
-    <p></p>
-</div>
+@section scripts{
+    <script src="http://maps.google.com/maps/api/js"></script>
 
-<div class="row">
+    <script src="~/app/modules/home-index.js"></script>
+    <script src="~/app/assets/bootstrap-gh-pages/ui-bootstrap-tpls-0.12.0.min.js"></script>
+    <script src="~/app/routes/home-index-routes.js"></script>
+
+    <!-- Services -->
+    <script src="~/app/services/home-index-factory.js"></script>
+    <script src="~/app/services/app-spinner.service.js"></script>
+    <!--Directives-->
+    <script src="~/app/directives/spinner.directive.js"></script>
+    <!-- Controllers -->
+    <script src="~/app/controllers/home-index-landingpagecontroller.js"></script>
+    <script src="~/app/controllers/shell.controller.js"></script>
+}
+
+<div>
+    <div>
+        <h2 class="well">Home Page</h2>
+    </div>
+
+    <div ng-controller="ShellCtrl as vm" ng-show="vm.showSpinner" class="page-splash dissolve-animation">
+        <div data-spinner="vm.spinnerOptions"></div>
+        <div class="page-splash-message page-splash-message-subtle">Loading data...</div>
+    </div>
+    <div data-ng-view=""></div>
 </div>

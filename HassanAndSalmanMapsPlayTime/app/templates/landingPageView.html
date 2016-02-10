@@ -1,0 +1,39 @@
+﻿<div class="row">
+
+    <div class="col-md-12">
+
+        <div class="form-horizontal" name="landingPageViewForm" role="form">
+            <fieldset>
+                <legend>
+                    Find Points of Interest (POI) on the Map Below, based on your current location
+                </legend>
+
+                <div class="form-group-sm row">
+                    <label class="col-md-4 control-label" for="scaleInputRadius">Adjust Area Circle Radius:</label>
+                    <div class="col-md-8">
+                        <input id="scaleInputRadius" name="scaleInputRadius" type="range" min="100" max="500" step="100" data-ng-model="myCirclePropertiesHolderObject.radius" />
+                    </div>
+                </div>
+
+                <div class="form-group-sm row">
+                    <label class="col-md-4 control-label" for="scaleInputZoom">Adjust Area Zoom:</label>
+                    <div class="col-md-8">
+                        <input id="scaleInputZoom" name="scaleInputZoom" type="range" min="16" max="20" step="1" data-ng-model="myCirclePropertiesHolderObject.zoom" />
+                    </div>
+                </div>
+
+                <div class="form-group-sm row">
+                    <ng-map zoom="{{myCirclePropertiesHolderObject.zoom}}" center="[0,0]">
+                        <shape id="circle" name="circle" centered="true"
+                               stroke-color='#FF0000' stroke-opacity="0.8" stroke-weight="2"
+                               center="current-position" radius="{{myCirclePropertiesHolderObject.radius}}" editable="true"></shape>
+                    </ng-map>
+                    <br />
+                    Circle Radius: {{myCirclePropertiesHolderObject.radius}}
+                    <br />
+                    Zoom Value: {{myCirclePropertiesHolderObject.zoom}}
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>
