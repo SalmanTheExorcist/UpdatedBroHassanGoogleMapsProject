@@ -27,6 +27,25 @@ namespace HassanAndSalmanMapsPlayTime
                       "~/Content/bootstrap.flatly.min.css",
                       "~/Content/font-awesome.min.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/angularjs").Include(
+                  //"~/Scripts/angular-file-upload-shim.js",
+                  "~/Scripts/angular.js",
+                  //"~/Scripts/angular-file-upload.js",
+                  "~/Scripts/angular-cookies.js",
+                  "~/Scripts/angular-resource.js",
+                  "~/Scripts/angular-sanitize.js",
+                   "~/Scripts/angular-route.js",
+                   "~/app/lib/angularjs-scroll-glue/src/scrollglue.js",
+                   //"~/app/lib/angular-signalr-hub/signalr-hub.js",
+                   "~/app/lib/angular-smart-table/dist/smart-table.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/myCustomScripts").Include(
+                "~/Scripts/MyCustomScripts/my-global-custom-script.js",
+                "~/Scripts/moment-with-locales.js",
+                "~/Scripts/datetimepicker.js",
+                "~/app/lib/spin.js/spin.js",
+                "~/app/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"));
         }
     }
 }
