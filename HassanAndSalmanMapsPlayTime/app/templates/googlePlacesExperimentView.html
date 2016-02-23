@@ -8,6 +8,38 @@
                     Playing with Google Places API here.
                 </legend>
             </fieldset>
+
+            <div class="form-group-sm row">
+                <label class="col-md-4 control-label" for="scaleInputRadius">Circle Radius:</label>
+                <div class="col-md-8">
+                    <input id="scaleInputRadius" name="scaleInputRadius" type="range" min="100" max="500" step="100" data-ng-model="myCirclePropertiesHolderObject.radius" />
+                </div>
+            </div>
+
+            <div class="form-group-sm row">
+                <label class="col-md-4 control-label" for="scaleInputZoom">Zoom:</label>
+                <div class="col-md-8">
+                    <input id="scaleInputZoom" name="scaleInputZoom" type="range" min="16" max="20" step="1" data-ng-model="myCirclePropertiesHolderObject.zoom" />
+                </div>
+            </div>
+
+            <div class="form-group-sm row">
+                <ng-map zoom="{{myCirclePropertiesHolderObject.zoom}}" center="[0,0]">
+                    <shape id="circle" name="circle" centered="true"
+                           stroke-color='#FF0000' stroke-opacity="0.8" stroke-weight="2"
+                           center="current-position" radius="{{myCirclePropertiesHolderObject.radius}}" editable="true">
+                    </shape>
+                    <marker position="current-position" animation="Animation.BOUNCE"></marker>
+                </ng-map>
+                <br />
+                <b>   Radius: {{myCirclePropertiesHolderObject.radius}}</b>
+                <br />
+                <b>Zoom: {{myCirclePropertiesHolderObject.zoom}}</b>
+                <br />
+                <b>Circle Center Latitude: {{myCirclePropertiesHolderObject.circle_center_lat}}</b>
+                <br />
+                <b>Circle Center Longitude: {{myCirclePropertiesHolderObject.circle_center_lag}}</b>
+            </div>
         </div>
     </div>
 </div>

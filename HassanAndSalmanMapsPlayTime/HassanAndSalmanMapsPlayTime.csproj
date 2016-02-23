@@ -316,7 +316,6 @@
     <Content Include="app\lib\angular-smart-table\src\stSort.js" />
     <Content Include="app\lib\angular-smart-table\src\stTable.js" />
     <Content Include="app\lib\angular-smart-table\src\top.txt" />
-    <Content Include="app\lib\angularjs-google-places\angularjs-google-places.min.js" />
     <Content Include="app\lib\angularjs-scroll-glue\example.html" />
     <Content Include="app\lib\angularjs-scroll-glue\karma.conf.js" />
     <Content Include="app\lib\angularjs-scroll-glue\src\scrollglue.js" />

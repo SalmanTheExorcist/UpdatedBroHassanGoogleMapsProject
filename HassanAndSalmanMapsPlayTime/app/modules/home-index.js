@@ -11,10 +11,11 @@
                                 'ngResource',
                                 'ngSanitize',
                                 'ui.bootstrap',
-                                'ngMap',
-                                'ngGPlaces'])
-    .run([function () {
-        /* Run is when the app gets kicked off*/
-        console.log("Run hook");
-    }]);
+                                'ngMap'
+    ])
+
+      .run([function () {
+          /* Run is when the app gets kicked off*/
+          console.log("Run hook - testing ngMap");
+      }]);
 })();
