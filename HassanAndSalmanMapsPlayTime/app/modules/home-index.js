@@ -11,7 +11,8 @@
                                 'ngResource',
                                 'ngSanitize',
                                 'ui.bootstrap',
-                                'ngMap'])
+                                'ngMap',
+                                'ngGPlaces'])
     .run([function () {
         /* Run is when the app gets kicked off*/
         console.log("Run hook");

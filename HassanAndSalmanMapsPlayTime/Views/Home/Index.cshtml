@@ -4,7 +4,8 @@
 }
 
 @section scripts{
-    <script src="http://maps.google.com/maps/api/js"></script>
+    @*<script src="http://maps.google.com/maps/api/js"></script>*@
+    @*<script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=true_or_false"></script>*@
 
     <script src="~/app/modules/home-index.js"></script>
     <script src="~/app/assets/bootstrap-gh-pages/ui-bootstrap-tpls-0.12.0.min.js"></script>
@@ -16,18 +17,35 @@
     <!--Directives-->
     <script src="~/app/directives/spinner.directive.js"></script>
     <!-- Controllers -->
-    <script src="~/app/controllers/home-index-landingpagecontroller.js"></script>
+    <script src="~/app/controllers/home-index-landingpage.controller.js"></script>
+    <script src="~/app/controllers/home-index-googleplacesexperiment.controller.js"></script>
+    <script src="~/app/controllers/home-index-thirdexperimentation.controller.js"></script>
+    <script src="~/app/controllers/home-index-fourthexperimentation.controller.js"></script>
+    <script src="~/app/controllers/home-index-fifthexperimentation.controller.js"></script>
     <script src="~/app/controllers/shell.controller.js"></script>
+    <script src="~/app/controllers/home-index-tabcontroller.js"></script>
+
 }
 
 <div>
     <div>
-        <h2 class="well">Home Page</h2>
+        <h2 class="well">Our Experiemnts with Google-Maps &amp; Google-Places APIs</h2>
     </div>
 
-    <div ng-controller="ShellCtrl as vm" ng-show="vm.showSpinner" class="page-splash dissolve-animation">
-        <div data-spinner="vm.spinnerOptions"></div>
-        <div class="page-splash-message page-splash-message-subtle">Loading data...</div>
+    <div data-ng-controller="tabController">
+
+        <ul class="nav nav-pills">
+            <li data-ng-click="setTab(0)" data-ng-class="(getTab()==0)? 'active':''"><a href="#/">First Experiment</a></li>
+            <li data-ng-click="setTab(1)" data-ng-class="(getTab()==1)? 'active':''"><a href="#/googlePlacesExperimentation">Second Experiment</a></li>
+            <li data-ng-click="setTab(2)" data-ng-class="(getTab()==2)? 'active':''"><a href="#/thirdexperiment">Third Experiment</a></li>
+            <li data-ng-click="setTab(3)" data-ng-class="(getTab()==3)? 'active':''"><a href="#/fourthexperiment">Fourth Experiment</a></li>
+            <li data-ng-click="setTab(4)" data-ng-class="(getTab()==4)? 'active':''"><a href="#/fifthexperiment">Fifth Experiment</a></li>
+        </ul>
+
+        <div ng-controller="ShellCtrl as vm" ng-show="vm.showSpinner" class="page-splash dissolve-animation">
+            <div data-spinner="vm.spinnerOptions"></div>
+            <div class="page-splash-message page-splash-message-subtle">Loading data...</div>
+        </div>
+        <div data-ng-view=""></div>
     </div>
-    <div data-ng-view=""></div>
 </div>

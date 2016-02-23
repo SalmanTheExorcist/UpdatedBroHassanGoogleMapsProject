@@ -281,7 +281,12 @@
     <Content Include="app\assets\bootstrap-gh-pages\ui-bootstrap-tpls-0.9.0.min.js" />
     <Content Include="app\assets\brighton_big.jpg" />
     <Content Include="app\assets\brighton_small.jpg" />
-    <Content Include="app\controllers\home-index-landingpagecontroller.js" />
+    <Content Include="app\controllers\home-index-fifthexperimentation.controller.js" />
+    <Content Include="app\controllers\home-index-fourthexperimentation.controller.js" />
+    <Content Include="app\controllers\home-index-googleplacesexperiment.controller.js" />
+    <Content Include="app\controllers\home-index-landingpage.controller.js" />
+    <Content Include="app\controllers\home-index-tabcontroller.js" />
+    <Content Include="app\controllers\home-index-thirdexperimentation.controller.js" />
     <Content Include="app\controllers\shell.controller.js" />
     <Content Include="app\directives\spinner.directive.js" />
     <Content Include="app\lib\angular-animate\angular-animate.js" />
@@ -311,6 +316,7 @@
     <Content Include="app\lib\angular-smart-table\src\stSort.js" />
     <Content Include="app\lib\angular-smart-table\src\stTable.js" />
     <Content Include="app\lib\angular-smart-table\src\top.txt" />
+    <Content Include="app\lib\angularjs-google-places\angularjs-google-places.min.js" />
     <Content Include="app\lib\angularjs-scroll-glue\example.html" />
     <Content Include="app\lib\angularjs-scroll-glue\karma.conf.js" />
     <Content Include="app\lib\angularjs-scroll-glue\src\scrollglue.js" />
@@ -533,7 +539,11 @@
     <Content Include="app\routes\home-index-routes.js" />
     <Content Include="app\services\app-spinner.service.js" />
     <Content Include="app\services\home-index-factory.js" />
+    <Content Include="app\templates\fifthExperimentView.html" />
+    <Content Include="app\templates\fourthExperimentView.html" />
+    <Content Include="app\templates\googlePlacesExperimentView.html" />
     <Content Include="app\templates\landingPageView.html" />
+    <Content Include="app\templates\thirdExperimentView.html" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />

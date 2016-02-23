@@ -11,6 +11,26 @@
             controller: 'landingPageController'
         });
 
+        $routeProvider.when('/googlePlacesExperimentation', {
+            templateUrl: '/app/templates/googlePlacesExperimentView.html',
+            controller: 'googlePlacesExperimentationController'
+        });
+
+        $routeProvider.when('/thirdexperiment', {
+            templateUrl: '/app/templates/thirdExperimentView.html',
+            controller: 'thirdExperimentationController'
+        });
+
+        $routeProvider.when('/fourthexperiment', {
+            templateUrl: '/app/templates/fourthExperimentView.html',
+            controller: 'fourthExperimentationController'
+        });
+
+        $routeProvider.when('/fifthexperiment', {
+            templateUrl: '/app/templates/fifthExperimentView.html',
+            controller: 'fifthExperimentationController'
+        });
+
         $routeProvider.otherwise({ redirectTo: '/' });
     }])
 })();
