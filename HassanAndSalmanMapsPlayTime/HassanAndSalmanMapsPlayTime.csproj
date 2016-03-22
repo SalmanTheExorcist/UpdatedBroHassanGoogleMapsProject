@@ -1541,6 +1541,7 @@
     <Content Include="Scripts\moment-with-locales.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\MyCustomScripts\my-global-custom-script.js" />
+    <Content Include="Scripts\MyCustomScripts\MyJQueryPlayTime.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -1580,6 +1581,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Scripts\version.json" />
+    <Content Include="Views\Home\MyJQueryPlayTime.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

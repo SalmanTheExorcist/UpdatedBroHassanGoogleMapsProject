@@ -8,6 +8,8 @@
     .controller('googlePlacesExperimentationController', ['$scope', '$http', 'dataService', 'NgMap', function ($scope, $http, dataService, NgMap) {
         $scope.data = dataService;
         //
+        // $scope.googleMapsUrl = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAMrD1y782H_DWSR-Y02QLxGzOAdFbWJP4";
+        //
         $scope.myCirclePropertiesHolderObject = {
             radius: 200,
             zoom: 16,
@@ -19,6 +21,7 @@
             $scope.map = map;
             $scope.myCirclePropertiesHolderObject.circle_center_lat = $scope.map.getCenter().lat();
             $scope.myCirclePropertiesHolderObject.circle_center_lag = $scope.map.getCenter().lng();
+            console.log("calling map.getCenter() below");
             console.log(map.getCenter());
         });
 

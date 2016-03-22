@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "GooglePlaces via JQuery";
+}
+
+@section scripts{
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMrD1y782H_DWSR-Y02QLxGzOAdFbWJP4&libraries=places"></script>
+    <script src="~/Scripts/MyCustomScripts/MyJQueryPlayTime.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            initializeMyJqueryPlayTime();
+
+        });
+    </script>
+
+}
+<div>
+    <h2 class="well">
+        Putting AngularJS aside, we are going native with JQuery &amp; Google-Maps/Google-Places <br /><em>[by: Salman, March-21-2016: Sunday Night]</em>
+        <br />
+        <img src="~/Content/powered-by-google/desktop/powered_by_google_on_white_hdpi.png" />
+    </h2>
+    <hr />
+</div>
+
+<div id="divMyMap"></div>

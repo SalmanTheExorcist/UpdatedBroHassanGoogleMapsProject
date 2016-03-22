@@ -23,11 +23,13 @@
                 </div>
 
                 <div class="form-group-sm row">
+
                     <ng-map zoom="{{myCirclePropertiesHolderObject.zoom}}" center="[0,0]">
                         <shape id="circle" name="circle" centered="true"
                                stroke-color='#FF0000' stroke-opacity="0.8" stroke-weight="2"
                                center="current-position" radius="{{myCirclePropertiesHolderObject.radius}}" editable="true"></shape>
                     </ng-map>
+
                     <br />
                     Circle Radius: {{myCirclePropertiesHolderObject.radius}}
                     <br />

@@ -19,5 +19,10 @@ namespace HassanAndSalmanMapsPlayTime.Controllers
 
             return View();
         }
+
+        public ActionResult MyJQueryPlayTime()
+        {
+            return View();
+        }
     }
 }
