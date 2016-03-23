@@ -59,10 +59,23 @@ function createAndLoadMyGoogleMap() {
     //
     //
     displayMyMapObjectProperties();
+    //
+    addBouncingMarkerToMyCurrentPosition();
+    //
     console.log(MyApp);
     //
     //
 }
+//
+function addBouncingMarkerToMyCurrentPosition() {
+    MyApp.MyBouncingMarker = new google.maps.Marker({
+        position: new google.maps.LatLng(MyApp.MyPossitionObject.latitudeValue, MyApp.MyPossitionObject.longtitudeValue),
+        animation: google.maps.Animation.BOUNCE
+    });
+
+    MyApp.MyBouncingMarker.setMap(MyApp.MyMap);
+}
+
 //
 function displayMyMapObjectProperties() {
     $('#lblCurrentPositionLatitude').text(roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(MyApp.MyMap.getCenter().lat()));
