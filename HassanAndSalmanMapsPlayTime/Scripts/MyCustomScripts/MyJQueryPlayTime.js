@@ -9,7 +9,8 @@ function initializeMyJqueryPlayTime() {
     //
     /*------------Here let's let the magic begin: --------------*/
 
-    google.maps.event.addDomListener(window, 'load', retriveMyCurrentPossitionValuesUsingHTML5GeolocationAndThenLoadMyMap);
+    // google.maps.event.addDomListener(window, 'load', retriveMyCurrentPossitionValuesUsingHTML5GeolocationAndThenLoadMyMap);
+    $('#btnLoadMyMap').click(retriveMyCurrentPossitionValuesUsingHTML5GeolocationAndThenLoadMyMap);
 
     /*------------------------------------------------------------*/
 };
@@ -57,16 +58,25 @@ function createAndLoadMyGoogleMap() {
     MyApp.MyMap = new google.maps.Map(document.getElementById("divMyMap"), MyApp.MyGoogleMapPropertiesObject);
     //
     //
-
+    displayMyMapObjectProperties();
     console.log(MyApp);
     //
     //
 }
-
+//
+function displayMyMapObjectProperties() {
+    $('#lblCurrentPositionLatitude').text(roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(MyApp.MyMap.getCenter().lat()));
+    $('#lblCurrentPositionLongtitude').text(roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(MyApp.MyMap.getCenter().lng()));
+    $('#divMyMapInformation').removeClass('hidden');
+}
+//
+function roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(givenNumber) {
+    return Math.round(givenNumber * 100) / 100;
+}
 //
 function showGeoLocationErrorInConsole(browserHasGeolocation) {
     console.log(browserHasGeolocation ?
                         'Error: The Geolocation service failed.' :
                         'Error: Your browser doesn\'t support geolocation.');
 }
-//
+//        

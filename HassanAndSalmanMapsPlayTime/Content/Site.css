@@ -78,3 +78,11 @@ textarea {
     width: 600px;
     height: 580px;
 }
+
+.tallParagraph {
+    min-height: 200px;
+}
+
+.extraPadding {
+    padding: 30px;
+}
