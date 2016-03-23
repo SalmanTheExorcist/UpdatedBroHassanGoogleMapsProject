@@ -58,13 +58,29 @@ function createAndLoadMyGoogleMap() {
     MyApp.MyMap = new google.maps.Map(document.getElementById("divMyMap"), MyApp.MyGoogleMapPropertiesObject);
     //
     //
-    displayMyMapObjectProperties();
-    //
+
     addBouncingMarkerToMyCurrentPosition();
+    //
+    addCircleAroundMyCurrentPosition();
+    //
+    displayMyMapObjectProperties();
     //
     console.log(MyApp);
     //
     //
+}
+//
+function addCircleAroundMyCurrentPosition() {
+    MyApp.MyCircleObject = new google.maps.Circle({
+        center: new google.maps.LatLng(MyApp.MyPossitionObject.latitudeValue, MyApp.MyPossitionObject.longtitudeValue),
+        radius: 500,
+        strokeColor: "#0000FF",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#0000FF",
+        fillOpacity: 0.4
+    });
+    MyApp.MyCircleObject.setMap(MyApp.MyMap);
 }
 //
 function addBouncingMarkerToMyCurrentPosition() {
@@ -80,6 +96,8 @@ function addBouncingMarkerToMyCurrentPosition() {
 function displayMyMapObjectProperties() {
     $('#lblCurrentPositionLatitude').text(roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(MyApp.MyMap.getCenter().lat()));
     $('#lblCurrentPositionLongtitude').text(roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(MyApp.MyMap.getCenter().lng()));
+    $('#lblMapZoomValue').text(MyApp.MyMap.zoom);
+    $('#lblCircleRadius').text(MyApp.MyCircleObject.radius);
     $('#divMyMapInformation').removeClass('hidden');
 }
 //
