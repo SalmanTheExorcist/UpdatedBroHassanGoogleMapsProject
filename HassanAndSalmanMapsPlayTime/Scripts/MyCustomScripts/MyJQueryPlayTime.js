@@ -48,11 +48,11 @@ function retriveMyCurrentPossitionValuesUsingHTML5GeolocationAndThenLoadMyMap() 
 
 function createAndLoadMyGoogleMap() {
     //
-
+    MyApp.scaleInputZoomValue = parseInt($('#scaleInputZoom').val());
     MyApp.MyGoogleMapPropertiesObject = {
         center: new google.maps.LatLng(MyApp.MyPossitionObject.latitudeValue, MyApp.MyPossitionObject.longtitudeValue),
         //center: new google.maps.LatLng(51.508742, -0.120850),
-        zoom: 16,
+        zoom: MyApp.scaleInputZoomValue,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     MyApp.MyMap = new google.maps.Map(document.getElementById("divMyMap"), MyApp.MyGoogleMapPropertiesObject);
@@ -71,9 +71,11 @@ function createAndLoadMyGoogleMap() {
 }
 //
 function addCircleAroundMyCurrentPosition() {
+    MyApp.scaleInputRadiusValue = parseInt($('#scaleInputRadius').val());
+
     MyApp.MyCircleObject = new google.maps.Circle({
         center: new google.maps.LatLng(MyApp.MyPossitionObject.latitudeValue, MyApp.MyPossitionObject.longtitudeValue),
-        radius: 500,
+        radius: MyApp.scaleInputRadiusValue,
         strokeColor: "#0000FF",
         strokeOpacity: 0.8,
         strokeWeight: 2,
