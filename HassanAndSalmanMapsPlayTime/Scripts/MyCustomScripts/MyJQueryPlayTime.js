@@ -11,13 +11,46 @@ function initializeMyJqueryPlayTime() {
 
     // google.maps.event.addDomListener(window, 'load', retriveMyCurrentPossitionValuesUsingHTML5GeolocationAndThenLoadMyMap);
     $('#btnLoadMyMap').click(retriveMyCurrentPossitionValuesUsingHTML5GeolocationAndThenLoadMyMap);
-
+    $('#btnSearchNearPlaces').click(doSearchForPlacesNearBy);
     /*------------------------------------------------------------*/
 };
 //
 
 //
+function doSearchForPlacesNearBy() {
+    // console.log(MyApp);
+    MyApp.MyGooglePlacesService.nearbySearch({
+        location: new google.maps.LatLng(MyApp.MyPossitionObject.latitudeValue, MyApp.MyPossitionObject.longtitudeValue),
+        radius: MyApp.scaleInputRadiusValue//,
+        // type: ['store']
+    }, mySearchPlacesCallbackFunction);
+}
+//
 
+function mySearchPlacesCallbackFunction(searchResultsArray, searchResultsStatus) {
+    console.log("inside mySearchPlacesCallbackFunction(searchResultsArray, searchResultsStatus)");
+    console.log("searchResultsStatus: " + searchResultsStatus);
+    console.log("searchResultsArray.length: " + searchResultsArray.length);
+    console.log(searchResultsArray[0]);
+    //
+    if (searchResultsStatus === google.maps.places.PlacesServiceStatus.OK) {
+        $('#tableSearchPlacesResults > tbody').empty();
+        for (var i = 0; i < searchResultsArray.length; i++) {
+            var strTableRowHtml = "<tr>";
+
+            strTableRowHtml = strTableRowHtml + "<td>" + (i + 1) + "</td>";
+            strTableRowHtml = strTableRowHtml + "<td>" + searchResultsArray[i].name + "</td>";
+            strTableRowHtml = strTableRowHtml + "<td>" + searchResultsArray[i].types[0] + "</td>";
+            strTableRowHtml = strTableRowHtml + "<td></td>";
+            strTableRowHtml = strTableRowHtml + "<td></td>";
+            strTableRowHtml = strTableRowHtml + "<td></td>";
+            strTableRowHtml = strTableRowHtml + "</tr>";
+            $('#tableSearchPlacesResults > tbody').append(strTableRowHtml);
+        }
+    }
+}
+
+//
 function retriveMyCurrentPossitionValuesUsingHTML5GeolocationAndThenLoadMyMap() {
     /*--setting an initial value--*/
     MyApp.MyPossitionObject = {
@@ -57,15 +90,17 @@ function createAndLoadMyGoogleMap() {
     };
     MyApp.MyMap = new google.maps.Map(document.getElementById("divMyMap"), MyApp.MyGoogleMapPropertiesObject);
     //
+    MyApp.MyGooglePlacesService = new google.maps.places.PlacesService(MyApp.MyMap);
     //
 
+    //
     addBouncingMarkerToMyCurrentPosition();
     //
     addCircleAroundMyCurrentPosition();
     //
     displayMyMapObjectProperties();
     //
-    console.log(MyApp);
+    //console.log(MyApp);
     //
     //
 }
@@ -112,4 +147,9 @@ function showGeoLocationErrorInConsole(browserHasGeolocation) {
                         'Error: The Geolocation service failed.' :
                         'Error: Your browser doesn\'t support geolocation.');
 }
-//        
+//
+
+function showProgressAnimation() {
+}
+function hideProgressAnimation() {
+}
