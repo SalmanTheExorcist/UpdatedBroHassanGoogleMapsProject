@@ -7,9 +7,6 @@ var MyApp = {};
 function initializeMyJqueryPlayTime() {
     console.log('called initializeMyJqueryPlayTime()');
     //
-    $('#btnShowOverLay').click(showMyOverLay);
-    $('#btnStopOverLay').click(stopMyOverLay);
-
     //
     /*------------Here let's let the magic begin: --------------*/
 
@@ -22,6 +19,8 @@ function initializeMyJqueryPlayTime() {
 
 //
 function doSearchForPlacesNearBy() {
+    showMyOverLay();
+
     // console.log(MyApp);
     MyApp.MyGooglePlacesService.nearbySearch({
         location: new google.maps.LatLng(MyApp.MyPossitionObject.latitudeValue, MyApp.MyPossitionObject.longtitudeValue),
@@ -35,9 +34,10 @@ function mySearchPlacesCallbackFunction(searchResultsArray, searchResultsStatus)
     console.log("inside mySearchPlacesCallbackFunction(searchResultsArray, searchResultsStatus)");
     console.log("searchResultsStatus: " + searchResultsStatus);
     console.log("searchResultsArray.length: " + searchResultsArray.length);
-    console.log(searchResultsArray[0]);
+    // console.log(searchResultsArray[0]);
     //
     if (searchResultsStatus === google.maps.places.PlacesServiceStatus.OK) {
+        $('#lblSearchResultsCount').text("Search Found (" + searchResultsArray.length + ") Points-Of-Interests");
         $('#tableSearchPlacesResults > tbody').empty();
         for (var i = 0; i < searchResultsArray.length; i++) {
             var strTableRowHtml = "<tr>";
@@ -52,10 +52,16 @@ function mySearchPlacesCallbackFunction(searchResultsArray, searchResultsStatus)
             $('#tableSearchPlacesResults > tbody').append(strTableRowHtml);
         }
     }
+    //
+
+    stopMyOverLay();
+    //
 }
 
 //
 function retriveMyCurrentPossitionValuesUsingHTML5GeolocationAndThenLoadMyMap() {
+    showMyOverLay();
+
     /*--setting an initial value--*/
     MyApp.MyPossitionObject = {
         latitudeValue: 0.0,
@@ -107,6 +113,9 @@ function createAndLoadMyGoogleMap() {
     //console.log(MyApp);
     //
     //
+    //
+    stopMyOverLay();
+    //
 }
 //
 function addCircleAroundMyCurrentPosition() {
@@ -150,6 +159,10 @@ function showGeoLocationErrorInConsole(browserHasGeolocation) {
     console.log(browserHasGeolocation ?
                         'Error: The Geolocation service failed.' :
                         'Error: Your browser doesn\'t support geolocation.');
+
+    //
+    stopMyOverLay();
+    //
 }
 //
 

@@ -15,14 +15,23 @@
     </script>
 
 }
+
+<style>
+    h6, .h6 {
+        font-size: 10px;
+    }
+
+    th {
+        text-align: center;
+    }
+</style>
+
 <div>
     <h2 class="well">
 
         <img src="~/Content/powered-by-google/desktop/powered_by_google_on_white_hdpi.png" />
     </h2>
-    <button id="btnShowOverLay" class="btn btn-danger">Show OverLay</button>
-    &nbsp;
-    <button id="btnStopOverLay" class="btn btn-danger">Stop OverLay</button>
+
     <hr />
 </div>
 
@@ -67,6 +76,9 @@
                 </div>
                 <div class="row">
                     <table class="table  table-bordered" id="tableSearchPlacesResults">
+                        <caption>
+                            <label id="lblSearchResultsCount" class="alert alert-link h4"></label>
+                        </caption>
                         <thead>
                             <tr>
                                 <th>#</th>
