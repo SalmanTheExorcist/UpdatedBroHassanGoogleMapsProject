@@ -291,5 +291,6 @@
 /// <reference path="moment-with-locales.js" />
 /// <reference path="mycustomscripts/my-global-custom-script.js" />
 /// <reference path="mycustomscripts/myjqueryplaytime.js" />
+/// <reference path="myjqplainoverlayscripts/jquery.plainoverlay.js" />
 /// <reference path="respond.matchmedia.addlistener.min.js" />
 /// <reference path="respond.min.js" />

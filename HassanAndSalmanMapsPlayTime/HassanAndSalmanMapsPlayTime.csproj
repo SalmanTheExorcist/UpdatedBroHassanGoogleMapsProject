@@ -1543,6 +1543,8 @@
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\MyCustomScripts\my-global-custom-script.js" />
     <Content Include="Scripts\MyCustomScripts\MyJQueryPlayTime.js" />
+    <Content Include="Scripts\MyJQPlainOverlayScripts\jquery.plainoverlay.js" />
+    <Content Include="Scripts\MyJQPlainOverlayScripts\jquery.plainoverlay.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -1583,6 +1585,11 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Scripts\version.json" />
     <Content Include="Views\Home\MyJQueryPlayTime.cshtml" />
+    <Content Include="Scripts\MyJQPlainOverlayScripts\LICENSE-MIT" />
+    <Content Include="Scripts\MyJQPlainOverlayScripts\plainoverlay.jquery.json" />
+    <Content Include="Scripts\MyJQPlainOverlayScripts\README.md" />
+    <Content Include="Scripts\MyJQPlainOverlayScripts\sass\progress.scss" />
+    <Content Include="Scripts\MyJQPlainOverlayScripts\sass\_animation.scss" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

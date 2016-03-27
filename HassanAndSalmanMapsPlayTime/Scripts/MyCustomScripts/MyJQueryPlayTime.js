@@ -7,6 +7,10 @@ var MyApp = {};
 function initializeMyJqueryPlayTime() {
     console.log('called initializeMyJqueryPlayTime()');
     //
+    $('#btnShowOverLay').click(showMyOverLay);
+    $('#btnStopOverLay').click(stopMyOverLay);
+
+    //
     /*------------Here let's let the magic begin: --------------*/
 
     // google.maps.event.addDomListener(window, 'load', retriveMyCurrentPossitionValuesUsingHTML5GeolocationAndThenLoadMyMap);
@@ -149,7 +153,9 @@ function showGeoLocationErrorInConsole(browserHasGeolocation) {
 }
 //
 
-function showProgressAnimation() {
+function showMyOverLay() {
+    $(".myBigPageRowForOverLay").plainOverlay('show');
 }
-function hideProgressAnimation() {
+function stopMyOverLay() {
+    $(".myBigPageRowForOverLay").plainOverlay('hide');
 }
