@@ -2,12 +2,146 @@
 //Date: March-22-2016 (Tuesday Night)
 //
 var MyApp = {};
+MyApp.LookupArrayPlacesTypes = [
+    "accounting",
+    "airport",
+    "amusement_park",
+    "aquarium",
+    "art_gallery",
+    "atm",
+    "bakery",
+    "bank",
+    "bar",
+    "beauty_salon",
+    "bicycle_store",
+    "book_store",
+    "bowling_alley",
+    "bus_station",
+    "cafe",
+    "campground",
+    "car_dealer",
+    "car_rental",
+    "car_repair",
+    "car_wash",
+    "casino",
+    "cemetery",
+    "church",
+    "city_hall",
+    "clothing_store",
+    "convenience_store",
+    "courthouse",
+    "dentist",
+    "department_store",
+    "doctor",
+    "electrician",
+    "electronics_store",
+    "embassy",
+    "fire_station",
+    "florist",
+    "funeral_home",
+    "furniture_store",
+    "gas_station",
+    "grocery_or_supermarket",
+    "gym",
+    "hair_care",
+    "hardware_store",
+    "hindu_temple",
+    "home_goods_store",
+    "hospital",
+    "insurance_agency",
+    "jewelry_store",
+    "laundry",
+    "lawyer",
+    "library",
+    "liquor_store",
+    "local_government_office",
+    "locksmith",
+    "lodging",
+    "meal_delivery",
+    "meal_takeaway",
+    "mosque",
+    "movie_rental",
+    "movie_theater",
+    "moving_company",
+    "museum",
+    "night_club",
+    "painter",
+    "park",
+    "parking",
+    "pet_store",
+    "pharmacy",
+    "physiotherapist",
+    "plumber",
+    "police",
+    "post_office",
+    "real_estate_agency",
+    "restaurant",
+    "roofing_contractor",
+    "rv_park",
+    "school",
+    "shoe_store",
+    "shopping_mall",
+    "spa",
+    "stadium",
+    "storage",
+    "store",
+    "subway_station",
+    "synagogue",
+    "taxi_stand",
+    "train_station",
+    "transit_station",
+    "travel_agency",
+    "university",
+    "veterinary_care",
+    "zoo",
+    "administrative_area_level_1",
+    "administrative_area_level_2",
+    "administrative_area_level_3",
+    "administrative_area_level_4",
+    "administrative_area_level_5",
+    "colloquial_area",
+    "country",
+    "establishment",
+    "finance",
+    "floor",
+    "food",
+    "general_contractor",
+    "geocode",
+    "health",
+    "intersection",
+    "locality",
+    "natural_feature",
+    "neighborhood",
+    "place_of_worship",
+    "political",
+    "point_of_interest",
+    "post_box",
+    "postal_code",
+    "postal_code_prefix",
+    "postal_code_suffix",
+    "postal_town",
+    "premise",
+    "room",
+    "route",
+    "street_address",
+    "street_number",
+    "sublocality",
+    "sublocality_level_4",
+    "sublocality_level_5",
+    "sublocality_level_3",
+    "sublocality_level_2",
+    "sublocality_level_1",
+    "subpremise"
+
+];
 
 //
 function initializeMyJqueryPlayTime() {
     console.log('called initializeMyJqueryPlayTime()');
     //
+    fillDrpLocationTypes();
     //
+
     /*------------Here let's let the magic begin: --------------*/
 
     // google.maps.event.addDomListener(window, 'load', retriveMyCurrentPossitionValuesUsingHTML5GeolocationAndThenLoadMyMap);
@@ -16,17 +150,34 @@ function initializeMyJqueryPlayTime() {
     /*------------------------------------------------------------*/
 };
 //
-
+function fillDrpLocationTypes() {
+    $("#drpLocationTypes").find('option').remove();
+    $("#drpLocationTypes").append('<option value="-1">All Location Types</option>');
+    $.each(MyApp.LookupArrayPlacesTypes, function (index, listItem) {
+        var strOption = '<option value="' + listItem + '">' + listItem + '</option>';
+        $("#drpLocationTypes").append(strOption);
+    });
+}
 //
 function doSearchForPlacesNearBy() {
     showMyOverLay();
 
     // console.log(MyApp);
-    MyApp.MyGooglePlacesService.nearbySearch({
-        location: new google.maps.LatLng(MyApp.MyPossitionObject.latitudeValue, MyApp.MyPossitionObject.longtitudeValue),
-        radius: MyApp.scaleInputRadiusValue//,
-        // type: ['store']
-    }, mySearchPlacesCallbackFunction);
+    var strSelectedPlaceType = $("#drpLocationTypes option:selected").val();
+    console.log(strSelectedPlaceType);
+    if (strSelectedPlaceType == "-1") {
+        MyApp.MyGooglePlacesService.nearbySearch({
+            location: new google.maps.LatLng(MyApp.MyPossitionObject.latitudeValue, MyApp.MyPossitionObject.longtitudeValue),
+            radius: MyApp.scaleInputRadiusValue
+        }, mySearchPlacesCallbackFunction);
+    }
+    else {
+        MyApp.MyGooglePlacesService.nearbySearch({
+            location: new google.maps.LatLng(MyApp.MyPossitionObject.latitudeValue, MyApp.MyPossitionObject.longtitudeValue),
+            radius: MyApp.scaleInputRadiusValue,
+            type: ['' + strSelectedPlaceType + '']
+        }, mySearchPlacesCallbackFunction);
+    }
 }
 //
 
@@ -34,20 +185,28 @@ function mySearchPlacesCallbackFunction(searchResultsArray, searchResultsStatus)
     console.log("inside mySearchPlacesCallbackFunction(searchResultsArray, searchResultsStatus)");
     console.log("searchResultsStatus: " + searchResultsStatus);
     console.log("searchResultsArray.length: " + searchResultsArray.length);
-    // console.log(searchResultsArray[0]);
+
+    //---Setting Defaults----
+    $('#tableSearchPlacesResults > tbody').empty();
+    $('#lblSearchResultsCount').text("Search Found ( 0 ) Points-Of-Interests");
     //
+    ///---Now doing real search---
     if (searchResultsStatus === google.maps.places.PlacesServiceStatus.OK) {
         $('#lblSearchResultsCount').text("Search Found (" + searchResultsArray.length + ") Points-Of-Interests");
-        $('#tableSearchPlacesResults > tbody').empty();
+        //
+        console.log(searchResultsArray[0]);
+
+        //
+
         for (var i = 0; i < searchResultsArray.length; i++) {
             var strTableRowHtml = "<tr>";
 
             strTableRowHtml = strTableRowHtml + "<td>" + (i + 1) + "</td>";
             strTableRowHtml = strTableRowHtml + "<td>" + searchResultsArray[i].name + "</td>";
-            strTableRowHtml = strTableRowHtml + "<td>" + searchResultsArray[i].types[0] + "</td>";
+            strTableRowHtml = strTableRowHtml + "<td>" + getStringLocationsConcatenatedFromArray(searchResultsArray[i].types) + "</td>";
             strTableRowHtml = strTableRowHtml + "<td></td>";
-            strTableRowHtml = strTableRowHtml + "<td></td>";
-            strTableRowHtml = strTableRowHtml + "<td></td>";
+            strTableRowHtml = strTableRowHtml + "<td>" + roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(searchResultsArray[i].geometry.location.lat()) + "</td>";
+            strTableRowHtml = strTableRowHtml + "<td>" + roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(searchResultsArray[i].geometry.location.lng()) + "</td>";
             strTableRowHtml = strTableRowHtml + "</tr>";
             $('#tableSearchPlacesResults > tbody').append(strTableRowHtml);
         }
@@ -57,7 +216,14 @@ function mySearchPlacesCallbackFunction(searchResultsArray, searchResultsStatus)
     stopMyOverLay();
     //
 }
-
+function getStringLocationsConcatenatedFromArray(mySpecificPlaceLocationTypesArray) {
+    var strConcatenatedLocationsString = "<ul class='text-left'>";
+    for (var i = 0; i < mySpecificPlaceLocationTypesArray.length; i++) {
+        strConcatenatedLocationsString = strConcatenatedLocationsString + "<li>" + mySpecificPlaceLocationTypesArray[i] + "</li>";
+    }
+    strConcatenatedLocationsString = strConcatenatedLocationsString + "</ul>";
+    return strConcatenatedLocationsString;
+}
 //
 function retriveMyCurrentPossitionValuesUsingHTML5GeolocationAndThenLoadMyMap() {
     showMyOverLay();
