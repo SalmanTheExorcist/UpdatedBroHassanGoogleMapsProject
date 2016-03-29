@@ -18,11 +18,15 @@
 
 <style>
     h6, .h6 {
-        font-size: 10px;
+        font-size: 18px;
     }
 
     th {
         text-align: center;
+    }
+
+    body {
+        font-size: 22px;
     }
 </style>
 
@@ -46,11 +50,11 @@
             <div class="form-group-sm row">
                 <label class="col-md-4 control-label" for="scaleInputRadius">Circle Radius (meters):</label>
                 <div class="col-md-8">
-                    <input id="scaleInputRadius" name="scaleInputRadius" type="range" min="100" max="500" step="100" value="200" />
+                    <input id="scaleInputRadius" name="scaleInputRadius" type="range" min="100" max="5000" step="100" value="200" />
                 </div>
             </div>
 
-            <div class="form-group-sm row">
+            <div class="form-group-sm row hidden">
                 <label class="col-md-4 control-label" for="scaleInputZoom">Adjust Area Zoom:</label>
                 <div class="col-md-8">
                     <input id="scaleInputZoom" name="scaleInputZoom" type="range" min="16" max="20" step="1" value="16" />
@@ -65,40 +69,42 @@
 
         <div id="divMyMapInformation" class="col-sm-push-1  col-sm-5 alert alert-info text-left extraPadding hidden">
             <div class="modal-header">Useful Information About My Map</div>
-            <div class="row form-group-sm h6">-Current Position Latitude (Horizontal Lines): <label id="lblCurrentPositionLatitude"></label></div>
-            <div class="row form-group-sm h6">-Current Position Longtitude (Vertical Lines): <label id="lblCurrentPositionLongtitude"></label></div>
-            <div class="row form-group-sm h6">-Bouncing Red Marker On Map Points To Your Current-Position</div>
-            <div class="row form-group-sm h6">-Map Zoom Value: <label id="lblMapZoomValue"></label></div>
-            <div class="row form-group-sm h6">-Circle Radius (meters): <label id="lblCircleRadius"></label></div>
-            <div class="row form-group-sm h6 alert alert-success text-center">
-                <div class="row extraPadding">
-                    <div class="form-group">
-
-                        <select class="form-control" id="drpLocationTypes"></select>
-                        <br>
-                        <input type="button" class="btn btn-primary" id="btnSearchNearPlaces" value="Click Me To Search Near Places" />
-                    </div>
-                    <div class="row">
-                        <table class="table  table-bordered" id="tableSearchPlacesResults">
-                            <caption>
-                                <label id="lblSearchResultsCount" class="alert alert-link h4"></label>
-                            </caption>
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Place Name</th>
-                                    <th>Type</th>
-                                    <th>Distance From Center</th>
-                                    <th>Latitude (Horizontal Lines)</th>
-                                    <th>Longtitude (Vertical Lines)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+            <div class="row form-group-sm h6">-&nbsp;Current Position Latitude (Horizontal Lines): <label id="lblCurrentPositionLatitude"></label></div>
+            <div class="row form-group-sm h6">-&nbsp;Current Position Longtitude (Vertical Lines): <label id="lblCurrentPositionLongtitude"></label></div>
+            <div class="row form-group-sm h6">-&nbsp;Bouncing Red Marker On Map Points To Your Current-Position</div>
+            <div class="row form-group-sm h6">-&nbsp;Map Zoom Value: <label id="lblMapZoomValue"></label></div>
+            <div class="row form-group-sm h6">-&nbsp;Circle Radius (meters): <label id="lblCircleRadius"></label></div>
         </div>
     </div>
+</div>
+<hr />
+<div class="row form-group-sm h6 alert alert-success text-center">
+    <div class="row extraPadding">
+        <div class="form-group">
+
+            <select class="form-control" id="drpLocationTypes"></select>
+            <br>
+            <input type="button" class="btn btn-primary" id="btnSearchNearPlaces" value="Click Me To Search Near Places" />
+        </div>
+        <div class="row">
+            <table class="table  table-bordered specifictd" id="tableSearchPlacesResults">
+                <caption>
+                    <label id="lblSearchResultsCount" class="alert alert-link h4"></label>
+                </caption>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Place Name</th>
+                        <th>Type</th>
+                        <th>Distance From Center</th>
+                        <th>Latitude (Horizontal Lines)</th>
+                        <th>Longtitude (Vertical Lines)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

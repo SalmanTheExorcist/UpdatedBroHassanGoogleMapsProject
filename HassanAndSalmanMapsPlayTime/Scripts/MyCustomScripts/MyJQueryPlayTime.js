@@ -194,7 +194,7 @@ function mySearchPlacesCallbackFunction(searchResultsArray, searchResultsStatus)
     if (searchResultsStatus === google.maps.places.PlacesServiceStatus.OK) {
         $('#lblSearchResultsCount').text("Search Found (" + searchResultsArray.length + ") Points-Of-Interests");
         //
-        console.log(searchResultsArray[0]);
+        // console.log(searchResultsArray);
 
         //
 
@@ -204,7 +204,7 @@ function mySearchPlacesCallbackFunction(searchResultsArray, searchResultsStatus)
             strTableRowHtml = strTableRowHtml + "<td>" + (i + 1) + "</td>";
             strTableRowHtml = strTableRowHtml + "<td>" + searchResultsArray[i].name + "</td>";
             strTableRowHtml = strTableRowHtml + "<td>" + getStringLocationsConcatenatedFromArray(searchResultsArray[i].types) + "</td>";
-            strTableRowHtml = strTableRowHtml + "<td></td>";
+            strTableRowHtml = strTableRowHtml + "<td>" + doSearchPlaceDetailsByPlaceIDAndReturnDistance(searchResultsArray[i].id) + "</td>";
             strTableRowHtml = strTableRowHtml + "<td>" + roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(searchResultsArray[i].geometry.location.lat()) + "</td>";
             strTableRowHtml = strTableRowHtml + "<td>" + roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(searchResultsArray[i].geometry.location.lng()) + "</td>";
             strTableRowHtml = strTableRowHtml + "</tr>";
@@ -215,7 +215,19 @@ function mySearchPlacesCallbackFunction(searchResultsArray, searchResultsStatus)
 
     stopMyOverLay();
     //
+    // console.log(MyApp);
 }
+//
+function doSearchPlaceDetailsByPlaceIDAndReturnDistance(placeId) {
+    //---TODO: Add required Coded
+    //
+    //
+    //--
+    return "placeId: " + placeId;
+    //
+}
+
+//
 function getStringLocationsConcatenatedFromArray(mySpecificPlaceLocationTypesArray) {
     var strConcatenatedLocationsString = "<ul class='text-left'>";
     for (var i = 0; i < mySpecificPlaceLocationTypesArray.length; i++) {
@@ -296,7 +308,15 @@ function addCircleAroundMyCurrentPosition() {
         fillColor: "#0000FF",
         fillOpacity: 0.4
     });
+    //
+
     MyApp.MyCircleObject.setMap(MyApp.MyMap);
+    //
+    //MyApp.MyCircleObject.bindTo('center', MyApp.MyBouncingMarker, 'position');
+    //--Date: Wednesday March-30th-2016
+    //-- added below line, and hence we have hidden
+    //-- the second inputScaler (Zoom) no longer need.
+    MyApp.MyMap.fitBounds(MyApp.MyCircleObject.getBounds());
 }
 //
 function addBouncingMarkerToMyCurrentPosition() {
