@@ -182,6 +182,24 @@ function doSearchForPlacesNearBy() {
 //
 
 function mySearchPlacesCallbackFunction(searchResultsArray, searchResultsStatus) {
+    var _innerCallBackFunc = function (searchResultsArray) {
+        for (var i = 0; i < searchResultsArray.length; i++) {
+            MyApp.MyGooglePlacesService.getDetails({
+                placeId: searchResultsArray[i].place_id
+            }, function (place, status) {
+                if (status === google.maps.places.PlacesServiceStatus.OK) {
+                    var myDistance = google.maps.geometry.spherical.computeDistanceBetween(place.geometry.location, MyApp.MyBouncingMarker.position);
+                    console.log("myDistance");
+                    console.log(myDistance);
+                    searchResultsArray[i].distance = myDistance;
+                }
+                else {
+                    searchResultsArray[i].distance = "Not-OK!";
+                }
+            });
+        }
+    }
+
     console.log("inside mySearchPlacesCallbackFunction(searchResultsArray, searchResultsStatus)");
     console.log("searchResultsStatus: " + searchResultsStatus);
     console.log("searchResultsArray.length: " + searchResultsArray.length);
@@ -192,40 +210,51 @@ function mySearchPlacesCallbackFunction(searchResultsArray, searchResultsStatus)
     //
     ///---Now doing real search---
     if (searchResultsStatus === google.maps.places.PlacesServiceStatus.OK) {
+        _innerCallBackFunc(searchResultsArray).promise().then(function (searchResultsArray) {
+            for (var i = 0; i < searchResultsArray.length; i++) {
+                var strTableRowHtml = "<tr>";
+
+                strTableRowHtml = strTableRowHtml + "<td>" + (i + 1) + "</td>";
+                strTableRowHtml = strTableRowHtml + "<td>" + searchResultsArray[i].name + "</td>";
+                strTableRowHtml = strTableRowHtml + "<td>" + getStringLocationsConcatenatedFromArray(searchResultsArray[i].types) + "</td>";
+                strTableRowHtml = strTableRowHtml + "<td>" + searchResultsArray[i].distance + "</td>";
+                strTableRowHtml = strTableRowHtml + "<td>" + roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(searchResultsArray[i].geometry.location.lat()) + "</td>";
+                strTableRowHtml = strTableRowHtml + "<td>" + roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(searchResultsArray[i].geometry.location.lng()) + "</td>";
+                strTableRowHtml = strTableRowHtml + "</tr>";
+                $('#tableSearchPlacesResults > tbody').append(strTableRowHtml);
+            }
+        });
         $('#lblSearchResultsCount').text("Search Found (" + searchResultsArray.length + ") Points-Of-Interests");
         //
-        // console.log(searchResultsArray);
-
-        //
-
-        for (var i = 0; i < searchResultsArray.length; i++) {
-            var strTableRowHtml = "<tr>";
-
-            strTableRowHtml = strTableRowHtml + "<td>" + (i + 1) + "</td>";
-            strTableRowHtml = strTableRowHtml + "<td>" + searchResultsArray[i].name + "</td>";
-            strTableRowHtml = strTableRowHtml + "<td>" + getStringLocationsConcatenatedFromArray(searchResultsArray[i].types) + "</td>";
-            strTableRowHtml = strTableRowHtml + "<td>" + doSearchPlaceDetailsByPlaceIDAndReturnDistance(searchResultsArray[i].id) + "</td>";
-            strTableRowHtml = strTableRowHtml + "<td>" + roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(searchResultsArray[i].geometry.location.lat()) + "</td>";
-            strTableRowHtml = strTableRowHtml + "<td>" + roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(searchResultsArray[i].geometry.location.lng()) + "</td>";
-            strTableRowHtml = strTableRowHtml + "</tr>";
-            $('#tableSearchPlacesResults > tbody').append(strTableRowHtml);
-        }
     }
     //
 
     stopMyOverLay();
     //
-    // console.log(MyApp);
 }
 //
-function doSearchPlaceDetailsByPlaceIDAndReturnDistance(placeId) {
+/*
+function doSearchPlaceDetailsByPlaceIDAndReturnDistance(paramPlaceID) {
     //---TODO: Add required Coded
-    //
-    //
-    //--
-    return "placeId: " + placeId;
+
+    MyApp.MyGooglePlacesService.getDetails({
+        placeId: paramPlaceID
+    }, function (place, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+            var myDistance = google.maps.geometry.spherical.computeDistanceBetween(place.geometry.location, MyApp.MyBouncingMarker.position);
+            console.log("myDistance");
+            console.log(myDistance);
+            return myDistance;
+        }
+        else {
+            return "Not-OK!";
+        }
+    });
+
     //
 }
+
+*/
 
 //
 function getStringLocationsConcatenatedFromArray(mySpecificPlaceLocationTypesArray) {
@@ -316,7 +345,7 @@ function addCircleAroundMyCurrentPosition() {
     //--Date: Wednesday March-30th-2016
     //-- added below line, and hence we have hidden
     //-- the second inputScaler (Zoom) no longer need.
-    MyApp.MyMap.fitBounds(MyApp.MyCircleObject.getBounds());
+    // MyApp.MyMap.fitBounds(MyApp.MyCircleObject.getBounds());
 }
 //
 function addBouncingMarkerToMyCurrentPosition() {
