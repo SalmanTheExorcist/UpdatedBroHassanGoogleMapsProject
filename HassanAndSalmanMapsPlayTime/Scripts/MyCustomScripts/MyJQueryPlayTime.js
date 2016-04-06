@@ -181,51 +181,58 @@ function doSearchForPlacesNearBy() {
 }
 //
 
-function mySearchPlacesCallbackFunction(searchResultsArray, searchResultsStatus) {
-    var _innerCallBackFunc = function (searchResultsArray) {
-        for (var i = 0; i < searchResultsArray.length; i++) {
-            MyApp.MyGooglePlacesService.getDetails({
-                placeId: searchResultsArray[i].place_id
-            }, function (place, status) {
-                if (status === google.maps.places.PlacesServiceStatus.OK) {
-                    var myDistance = google.maps.geometry.spherical.computeDistanceBetween(place.geometry.location, MyApp.MyBouncingMarker.position);
-                    console.log("myDistance");
-                    console.log(myDistance);
-                    searchResultsArray[i].distance = myDistance;
-                }
-                else {
-                    searchResultsArray[i].distance = "Not-OK!";
-                }
-            });
-        }
+function fillInTheDistanceProperty(searchResultsArray) {
+    var _distancesArray[]
+    for (var i = 0; i < searchResultsArray.length; i++) {
+        MyApp.MyGooglePlacesService.getDetails({
+            placeId: searchResultsArray[i].place_id
+        }, function (place, status, searchResultsArray, i) {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+                var myDistance = google.maps.geometry.spherical.computeDistanceBetween(place.geometry.location, MyApp.MyBouncingMarker.position);
+                console.log("myDistance");
+                console.log(myDistance);
+                searchResultsArray[i]["distance"] = myDistance;
+            }
+            else {
+                searchResultsArray[i]["distance"] = "Not-OK!";
+            }
+        });
     }
 
-    console.log("inside mySearchPlacesCallbackFunction(searchResultsArray, searchResultsStatus)");
-    console.log("searchResultsStatus: " + searchResultsStatus);
-    console.log("searchResultsArray.length: " + searchResultsArray.length);
-
+    return this;
+}
+//
+function drawAndFillMyHTMLTable(searchResultsArray) {
     //---Setting Defaults----
     $('#tableSearchPlacesResults > tbody').empty();
     $('#lblSearchResultsCount').text("Search Found ( 0 ) Points-Of-Interests");
     //
+    for (var i = 0; i < searchResultsArray.length; i++) {
+        var strTableRowHtml = "<tr>";
+
+        strTableRowHtml = strTableRowHtml + "<td>" + (i + 1) + "</td>";
+        strTableRowHtml = strTableRowHtml + "<td>" + searchResultsArray[i].name + "</td>";
+        strTableRowHtml = strTableRowHtml + "<td>" + getStringLocationsConcatenatedFromArray(searchResultsArray[i].types) + "</td>";
+        strTableRowHtml = strTableRowHtml + "<td>" + searchResultsArray[i].distance + "</td>";
+        strTableRowHtml = strTableRowHtml + "<td>" + roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(searchResultsArray[i].geometry.location.lat()) + "</td>";
+        strTableRowHtml = strTableRowHtml + "<td>" + roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(searchResultsArray[i].geometry.location.lng()) + "</td>";
+        strTableRowHtml = strTableRowHtml + "</tr>";
+        $('#tableSearchPlacesResults > tbody').append(strTableRowHtml);
+    }
+
+    $('#lblSearchResultsCount').text("Search Found (" + searchResultsArray.length + ") Points-Of-Interests");
+    //
+    return this;
+}
+//
+function mySearchPlacesCallbackFunction(searchResultsArray, searchResultsStatus) {
+    console.log("inside mySearchPlacesCallbackFunction(searchResultsArray, searchResultsStatus)");
+    console.log("searchResultsStatus: " + searchResultsStatus);
+    console.log("searchResultsArray.length: " + searchResultsArray.length);
+
     ///---Now doing real search---
     if (searchResultsStatus === google.maps.places.PlacesServiceStatus.OK) {
-        _innerCallBackFunc(searchResultsArray).promise().then(function (searchResultsArray) {
-            for (var i = 0; i < searchResultsArray.length; i++) {
-                var strTableRowHtml = "<tr>";
-
-                strTableRowHtml = strTableRowHtml + "<td>" + (i + 1) + "</td>";
-                strTableRowHtml = strTableRowHtml + "<td>" + searchResultsArray[i].name + "</td>";
-                strTableRowHtml = strTableRowHtml + "<td>" + getStringLocationsConcatenatedFromArray(searchResultsArray[i].types) + "</td>";
-                strTableRowHtml = strTableRowHtml + "<td>" + searchResultsArray[i].distance + "</td>";
-                strTableRowHtml = strTableRowHtml + "<td>" + roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(searchResultsArray[i].geometry.location.lat()) + "</td>";
-                strTableRowHtml = strTableRowHtml + "<td>" + roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(searchResultsArray[i].geometry.location.lng()) + "</td>";
-                strTableRowHtml = strTableRowHtml + "</tr>";
-                $('#tableSearchPlacesResults > tbody').append(strTableRowHtml);
-            }
-        });
-        $('#lblSearchResultsCount').text("Search Found (" + searchResultsArray.length + ") Points-Of-Interests");
-        //
+        fillInTheDistanceProperty(searchResultsArray).drawAndFillMyHTMLTable(searchResultsArray);
     }
     //
 
@@ -233,7 +240,7 @@ function mySearchPlacesCallbackFunction(searchResultsArray, searchResultsStatus)
     //
 }
 //
-/*
+
 function doSearchPlaceDetailsByPlaceIDAndReturnDistance(paramPlaceID) {
     //---TODO: Add required Coded
 
@@ -253,8 +260,6 @@ function doSearchPlaceDetailsByPlaceIDAndReturnDistance(paramPlaceID) {
 
     //
 }
-
-*/
 
 //
 function getStringLocationsConcatenatedFromArray(mySpecificPlaceLocationTypesArray) {
