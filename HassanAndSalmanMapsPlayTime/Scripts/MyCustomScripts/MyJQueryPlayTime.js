@@ -134,10 +134,19 @@ MyApp.LookupArrayPlacesTypes = [
     "subpremise"
 
 ];
-
+MyApp.MyPlacesObjectsArrayForHTMLTable = [];
 //
 function initializeMyJqueryPlayTime() {
     console.log('called initializeMyJqueryPlayTime()');
+    //
+    $('#btnJQueryPromisesPlayTime').click(function (evt) {
+        evt.preventDefault();
+        //
+        myJqueryPromisesPlayTimeFunc();
+
+        //
+    });
+
     //
     fillDrpLocationTypes();
     //
@@ -149,6 +158,10 @@ function initializeMyJqueryPlayTime() {
     $('#btnSearchNearPlaces').click(doSearchForPlacesNearBy);
     /*------------------------------------------------------------*/
 };
+//
+function myJqueryPromisesPlayTimeFunc() {
+    console.log("inside: myJqueryPromisesPlayTimeFunc()");
+}
 //
 function fillDrpLocationTypes() {
     $("#drpLocationTypes").find('option').remove();
@@ -182,7 +195,7 @@ function doSearchForPlacesNearBy() {
 //
 
 function fillInTheDistanceProperty(searchResultsArray) {
-    var _distancesArray[]
+    var _distancesArray = [];
     for (var i = 0; i < searchResultsArray.length; i++) {
         MyApp.MyGooglePlacesService.getDetails({
             placeId: searchResultsArray[i].place_id
