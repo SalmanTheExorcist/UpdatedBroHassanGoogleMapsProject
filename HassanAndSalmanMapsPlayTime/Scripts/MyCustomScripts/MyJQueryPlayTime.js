@@ -159,9 +159,113 @@ function initializeMyJqueryPlayTime() {
     /*------------------------------------------------------------*/
 };
 //
+/*-------------Jquery-Promises And Defered Stuff Starting Below-----*/
+/*------------------------------------------------------------------*/
 function myJqueryPromisesPlayTimeFunc() {
+    showMyOverLay();
     console.log("inside: myJqueryPromisesPlayTimeFunc()");
+
+    withPromise_retriveMyCurrentPossitionValuesUsingHTML5GeolocationAndThenLoadMyMap(MyApp).done(function () {
+        withPromise_doSearchForPlacesNearByAndFillMyPlacesObjectsArray(MyApp).done(function () {
+            console.log("MyApp object is now: ");
+            console.log(MyApp);
+
+            //
+        });
+    });
 }
+//
+var withPromise_doSearch = function (searchResultsArray, searchResultsStatus, MyApp) {
+    var _deferred = new $.Deferred();
+    console.log("Inside: withPromise_doSearch()");
+    //looping through the Array-Of-Places Results
+    $.each(searchResultsArray, function (key, value) {
+        MyApp.MyPlacesObjectsArrayForHTMLTable.push({
+            id: "" + key + "",
+            placeName: "" + value.name + "",
+            type: "" + getStringLocationsConcatenatedFromArray(value.types) + "",
+            distanceFromCenter: "--- meters",
+            latitudeHorizontalLines: "" + roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(value.geometry.location.lat()) + "",
+            longtitudeVerticalLines: "" + roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(value.geometry.location.lng()) + ""
+        }
+    )
+    });
+    //
+
+    // return promise so that outside code cannot reject/resolve the deferred
+    return _deferred.promise();
+}
+var withPromise_doSearchForPlacesNearByAndFillMyPlacesObjectsArray = function (MyApp) {
+    var _deferred = new $.Deferred();
+
+    var strSelectedPlaceType = $("#drpLocationTypes option:selected").val();
+
+    MyApp.MyGooglePlacesService.nearbySearch({
+        location: new google.maps.LatLng(MyApp.MyPossitionObject.latitudeValue, MyApp.MyPossitionObject.longtitudeValue),
+        radius: MyApp.scaleInputRadiusValue
+    }, function (searchResultsArray, searchResultsStatus) {
+        if (searchResultsStatus === google.maps.places.PlacesServiceStatus.OK) {
+            withPromise_doSearch(searchResultsArray, searchResultsStatus, MyApp).done(_deferred.resolve(MyApp));
+        }
+        else {
+            _deferred.reject();
+        }
+    });
+
+    // return promise so that outside code cannot reject/resolve the deferred
+    return _deferred.promise();
+}
+var withPromise_retriveMyCurrentPossitionValuesUsingHTML5GeolocationAndThenLoadMyMap = function (MyApp) {
+    var _deferred = new $.Deferred();
+    //
+
+    /*--setting an initial value--*/
+    MyApp.MyPossitionObject = {
+        latitudeValue: 0.0,
+        longtitudeValue: 0.0
+    };
+    /*---------------------------*/
+    MyApp.scaleInputZoomValue = parseInt($('#scaleInputZoom').val());
+    MyApp.scaleInputRadiusValue = parseInt($('#scaleInputRadius').val());
+    MyApp.MyGoogleMapPropertiesObject = {
+        center: new google.maps.LatLng(MyApp.MyPossitionObject.latitudeValue, MyApp.MyPossitionObject.longtitudeValue),
+        zoom: MyApp.scaleInputZoomValue,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    MyApp.MyMap = new google.maps.Map(document.getElementById("divMyMap"), MyApp.MyGoogleMapPropertiesObject);
+    MyApp.MyGooglePlacesService = new google.maps.places.PlacesService(MyApp.MyMap);
+
+    /*-----------------------------*/
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            MyApp.MyPossitionObject.latitudeValue = position.coords.latitude;
+            MyApp.MyPossitionObject.longtitudeValue = position.coords.longitude;
+            //
+            console.log('Location found.');
+
+            MyApp.scaleInputZoomValue = parseInt($('#scaleInputZoom').val());
+            MyApp.MyGoogleMapPropertiesObject = {
+                center: new google.maps.LatLng(MyApp.MyPossitionObject.latitudeValue, MyApp.MyPossitionObject.longtitudeValue),
+                zoom: MyApp.scaleInputZoomValue,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+
+            _deferred.resolve(MyApp);
+            //  createAndLoadMyGoogleMap();
+        }, function () {
+            showGeoLocationErrorInConsole(true);
+        });
+    } else {
+        // Browser doesn't support Geolocation
+        showGeoLocationErrorInConsole(false);
+        _deferred.reject();
+    }
+
+    // return promise so that outside code cannot reject/resolve the deferred
+    return _deferred.promise();
+}
+/*-------------Jquery-Promises And Defered Stuff Above-----------------*/
+/*---------------------------------------------------------------------*/
 //
 function fillDrpLocationTypes() {
     $("#drpLocationTypes").find('option').remove();
