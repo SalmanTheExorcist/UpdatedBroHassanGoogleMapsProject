@@ -167,14 +167,24 @@ function myJqueryPromisesPlayTimeFunc() {
 
     withPromise_retriveMyCurrentPossitionValuesUsingHTML5GeolocationAndThenLoadMyMap(MyApp).done(function () {
         withPromise_doSearchForPlacesNearByAndFillMyPlacesObjectsArray(MyApp).done(function () {
-            console.log("MyApp object is now: ");
-            console.log(MyApp);
-
+            withPromise_fillDistancesValuesFromGoogleGeometry(MyApp).done(function () {
+                console.log("MyApp object is now: ");
+                console.log(MyApp);
+            });
             //
         });
     });
 }
 //
+var withPromise_fillDistancesValuesFromGoogleGeometry = function (MyApp) {
+    var _deferred = new $.Deferred();
+    //
+    console.log("now inside: withPromise_fillDistancesValuesFromGoogleGeometry()");
+    //
+
+    // return promise so that outside code cannot reject/resolve the deferred
+    return _deferred.promise();
+}
 var withPromise_doSearch = function (searchResultsArray, searchResultsStatus, MyApp) {
     var _deferred = new $.Deferred();
     console.log("Inside: withPromise_doSearch()");
