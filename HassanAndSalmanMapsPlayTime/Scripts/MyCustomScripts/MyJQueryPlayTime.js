@@ -167,9 +167,12 @@ function myJqueryPromisesPlayTimeFunc() {
 
     withPromise_retriveMyCurrentPossitionValuesUsingHTML5GeolocationAndThenLoadMyMap(MyApp).done(function () {
         withPromise_doSearchForPlacesNearByAndFillMyPlacesObjectsArray(MyApp).done(function () {
-            withPromise_fillDistancesValuesFromGoogleGeometry(MyApp).done(function () {
+            withPromise_fillDistancesValuesFromGoogleGeometry(MyApp).done(function (results) {
                 console.log("MyApp object is now: ");
-                console.log(MyApp);
+                // console.log(MyApp);
+                console.log("results: ");
+                console.log(results);
+                stopMyOverLay();
             });
             //
         });
@@ -177,21 +180,69 @@ function myJqueryPromisesPlayTimeFunc() {
 }
 //
 var withPromise_fillDistancesValuesFromGoogleGeometry = function (MyApp) {
-    var _deferred = new $.Deferred();
+    // var _deferredMaster = new $.Deferred();
+    var _myPromisesArray = [];
     //
     console.log("now inside: withPromise_fillDistancesValuesFromGoogleGeometry()");
     //
+    console.log("Before Loop: ");
+
+    $.each(MyApp.MyPlacesObjectsArrayForHTMLTable, function (key, value) {
+        var _def = new $.Deferred();
+
+        /*-----------------------------------------------*/
+        // calling Google-Geometry-Api Here per Single Place-
+
+        MyApp.MyGooglePlacesService.getDetails({
+            placeId: value.place_id
+        }, function (place, status) {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+                var myDistance = google.maps.geometry.spherical.computeDistanceBetween(place.geometry.location, MyApp.MyBouncingMarker.position);
+                //console.log("myDistance");
+                //console.log(myDistance);
+                //MyApp.MyPlacesObjectsArrayForHTMLTable[key].distanceFromCenter = myDistance + " meters";
+                _def.resolve(myDistance);
+            }
+            else {
+                //searchResultsArray[i]["distance"] = "Not-OK!";
+                _def.reject();
+            }
+        });
+
+        /*-----------------------------------------------*/
+
+        _myPromisesArray.push(_def);
+    });
+
+    return $.when.apply(undefined, _myPromisesArray).promise();
+
+    //  return $.when.apply(undefined, _myPromisesArray).promise();
+
+    //return $.when.apply(undefined, _myPromisesArray).then(function () {
+    //    console.log("Done with All Promises!");
+    //    console.log("Now after Loop: _myPromisesArray.length: " + _myPromisesArray.length);
+    //    _deferredMaster.resolve(MyApp);
+    //}).promise();
+
+    //for (var i = 0; i < _myPromisesArray.length; i++) {
+    //    // MyApp.MyPlacesObjectsArrayForHTMLTable[i].distanceFromCenter = _myPromisesArray[i][0];
+    //    console.log("_myPromisesArray[i]: ");
+    //    console.log(_myPromisesArray[i]);
+    //}
+    // _deferredMaster.resolve(MyApp);
 
     // return promise so that outside code cannot reject/resolve the deferred
-    return _deferred.promise();
+    // return _deferredMaster.promise();
 }
 var withPromise_doSearch = function (searchResultsArray, searchResultsStatus, MyApp) {
     var _deferred = new $.Deferred();
+
     console.log("Inside: withPromise_doSearch()");
     //looping through the Array-Of-Places Results
     $.each(searchResultsArray, function (key, value) {
         MyApp.MyPlacesObjectsArrayForHTMLTable.push({
             id: "" + key + "",
+            place_id: value.place_id,
             placeName: "" + value.name + "",
             type: "" + getStringLocationsConcatenatedFromArray(value.types) + "",
             distanceFromCenter: "--- meters",
@@ -244,7 +295,14 @@ var withPromise_retriveMyCurrentPossitionValuesUsingHTML5GeolocationAndThenLoadM
     };
     MyApp.MyMap = new google.maps.Map(document.getElementById("divMyMap"), MyApp.MyGoogleMapPropertiesObject);
     MyApp.MyGooglePlacesService = new google.maps.places.PlacesService(MyApp.MyMap);
+    //
 
+    MyApp.MyBouncingMarker = new google.maps.Marker({
+        position: new google.maps.LatLng(MyApp.MyPossitionObject.latitudeValue, MyApp.MyPossitionObject.longtitudeValue),
+        animation: google.maps.Animation.BOUNCE
+    });
+
+    //
     /*-----------------------------*/
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
