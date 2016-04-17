@@ -397,10 +397,10 @@ var withPromise_doSearch = function (searchResultsArray, searchResultsStatus, My
 
     console.log("Inside: withPromise_doSearch()");
     //looping through the Array-Of-Places Results
-    for (var j = 0; j < 2; j++) {
-        var key = j;
-        var value = searchResultsArray[j];
-        //$.each(searchResultsArray, function (key, value) {
+    //for (var j = 0; j < 2; j++) {
+    //    var key = j;
+    //    var value = searchResultsArray[j];
+    $.each(searchResultsArray, function (key, value) {
         MyApp.MyPlacesObjectsArrayForHTMLTable.push({
             id: "" + key + "",
             place_id: value.place_id,
@@ -412,7 +412,7 @@ var withPromise_doSearch = function (searchResultsArray, searchResultsStatus, My
             locationObject: value.geometry.location
         }
     )
-    };
+    });
     //
 
     // return promise so that outside code cannot reject/resolve the deferred
