@@ -261,6 +261,7 @@ function myJqueryPromisesPlayTimeFunc() {
                         stopMyOverLay();
                     });
                 });
+
                 //
             });
         });
@@ -424,6 +425,7 @@ var withPromise_doSearch = function (searchResultsArray, searchResultsStatus, My
     // return promise so that outside code cannot reject/resolve the deferred
     return _deferred.promise();
 }
+
 var withPromise_doSearchForPlacesNearByAndFillMyPlacesObjectsArray = function (MyApp) {
     var _deferred = new $.Deferred();
 
