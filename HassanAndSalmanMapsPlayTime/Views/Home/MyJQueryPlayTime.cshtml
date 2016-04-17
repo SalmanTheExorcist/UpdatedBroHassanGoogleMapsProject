@@ -45,6 +45,7 @@
         <div class="col-sm-3">
             <input type="button" class="btn btn-primary hidden" id="btnLoadMyMap" value="Click Me To Render My Map" />
             <button class="btn btn-primary" id="btnJQueryPromisesPlayTime">Click Here to Start!</button>
+            <button class="btn btn-primary hidden" id="btnJQueryPromisesPlayTime_Refresh">Click To Refresh Results</button>
         </div>
         <div class="col-sm-8 alert alert-warning">
             <div class="modal-header">Adjust The Scales Below, Then Click On Button On Left To Render/Refresh The Map</div>
@@ -55,7 +56,7 @@
                 </div>
             </div>
 
-            <div class="form-group-sm row ">
+            <div class="form-group-sm row hidden">
                 <label class="col-md-4 control-label" for="scaleInputZoom">Adjust Area Zoom:</label>
                 <div class="col-md-8">
                     <input id="scaleInputZoom" name="scaleInputZoom" type="range" min="16" max="20" step="1" value="16" />

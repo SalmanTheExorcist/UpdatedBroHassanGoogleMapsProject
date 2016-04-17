@@ -142,11 +142,18 @@ function initializeMyJqueryPlayTime() {
     $('#btnJQueryPromisesPlayTime').click(function (evt) {
         evt.preventDefault();
         //
+        $('#btnJQueryPromisesPlayTime').addClass('hidden');
+        $('#btnJQueryPromisesPlayTime_Refresh').removeClass('hidden');
         myJqueryPromisesPlayTimeFunc();
 
         //
     });
-
+    //
+    $('#btnJQueryPromisesPlayTime_Refresh').click(function (evt) {
+        evt.preventDefault();
+        //
+        myJqueryPromisesPlayTimeFunc_with_newMarkerCoordinates();
+    });
     //
     fillDrpLocationTypes();
     //
@@ -161,18 +168,37 @@ function initializeMyJqueryPlayTime() {
 //
 /*-------------Jquery-Promises And Defered Stuff Starting Below-----*/
 /*------------------------------------------------------------------*/
-function myJqueryPromisesPlayTimeFunc() {
-    showMyOverLay();
-    console.log("inside: myJqueryPromisesPlayTimeFunc()");
+//
+function myJqueryPromisesPlayTimeFunc_with_newMarkerCoordinates() {
+    console.log("MyApp.MyBouncingMarker.position: ");
+    console.log(MyApp.MyBouncingMarker.position);
+    //here we apply the new coordinates from the dragged marker:
+    MyApp.MyPossitionObject.latitudeValue = MyApp.MyBouncingMarker.position.lat();
+    MyApp.MyPossitionObject.longtitudeValue = MyApp.MyBouncingMarker.position.lng();
+    MyApp.MyGoogleMapPropertiesObject = {
+        center: new google.maps.LatLng(MyApp.MyPossitionObject.latitudeValue, MyApp.MyPossitionObject.longtitudeValue),
+        zoom: MyApp.scaleInputZoomValue,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    MyApp.MyMap = new google.maps.Map(document.getElementById("divMyMap"), MyApp.MyGoogleMapPropertiesObject);
+    MyApp.MyGooglePlacesService = new google.maps.places.PlacesService(MyApp.MyMap);
 
-    withPromise_retriveMyCurrentPossitionValuesUsingHTML5GeolocationAndThenLoadMyMap(MyApp).done(function () {
+    withPromise_addCircleAroundMyCurrentPosition(MyApp).done(function () {
+        //now adding bouncing marker at center (i.e.initially it is my current possition)
+        MyApp.MyBouncingMarker = new google.maps.Marker({
+            position: new google.maps.LatLng(MyApp.MyPossitionObject.latitudeValue, MyApp.MyPossitionObject.longtitudeValue),
+            animation: google.maps.Animation.BOUNCE,
+            draggable: true,
+            title: "Drag me!"
+        });
+
+        MyApp.MyBouncingMarker.setMap(MyApp.MyMap);
+
+        //reseting/clearing the array below
+        MyApp.MyPlacesObjectsArrayForHTMLTable = [];
+
         withPromise_doSearchForPlacesNearByAndFillMyPlacesObjectsArray(MyApp).done(function () {
             withPromise_fillDistancesValuesFromGoogleGeometry(MyApp).done(function (resultsDistancesArray) {
-                //console.log("MyApp object is now: ");
-                //console.log(MyApp);
-                //console.log("resultsDistancesArray: ");
-                //console.log(resultsDistancesArray);
-
                 $.each(resultsDistancesArray, function (key, value) {
                     MyApp.MyPlacesObjectsArrayForHTMLTable[key].distanceFromCenter = value + " meters";
                 });
@@ -187,6 +213,79 @@ function myJqueryPromisesPlayTimeFunc() {
             //
         });
     });
+}
+function myJqueryPromisesPlayTimeFunc() {
+    showMyOverLay();
+    console.log("inside: myJqueryPromisesPlayTimeFunc()");
+
+    withPromise_retriveMyCurrentPossitionValuesUsingHTML5GeolocationAndThenLoadMyMap(MyApp).done(function () {
+        MyApp.MyMap = new google.maps.Map(document.getElementById("divMyMap"), MyApp.MyGoogleMapPropertiesObject);
+        MyApp.MyGooglePlacesService = new google.maps.places.PlacesService(MyApp.MyMap);
+
+        withPromise_addCircleAroundMyCurrentPosition(MyApp).done(function () {
+            //now adding bouncing marker at center (i.e.initially it is my current possition)
+            MyApp.MyBouncingMarker = new google.maps.Marker({
+                position: new google.maps.LatLng(MyApp.MyPossitionObject.latitudeValue, MyApp.MyPossitionObject.longtitudeValue),
+                animation: google.maps.Animation.BOUNCE,
+                draggable: true,
+                title: "Drag me!"
+            });
+
+            MyApp.MyBouncingMarker.setMap(MyApp.MyMap);
+            //reseting/clearing the array below
+            MyApp.MyPlacesObjectsArrayForHTMLTable = [];
+
+            withPromise_doSearchForPlacesNearByAndFillMyPlacesObjectsArray(MyApp).done(function () {
+                withPromise_fillDistancesValuesFromGoogleGeometry(MyApp).done(function (resultsDistancesArray) {
+                    //console.log("MyApp object is now: ");
+                    //console.log(MyApp);
+                    //console.log("resultsDistancesArray: ");
+                    //console.log(resultsDistancesArray);
+
+                    $.each(resultsDistancesArray, function (key, value) {
+                        MyApp.MyPlacesObjectsArrayForHTMLTable[key].distanceFromCenter = value + " meters";
+                    });
+
+                    withPromise_drawAndFillMyHTMLTable(MyApp).done(function () {
+                        console.log("Done with withPromise_drawAndFillMyHTMLTable - ");
+                        console.log("MyApp object is now: ");
+                        console.log(MyApp);
+                        stopMyOverLay();
+                    });
+                });
+                //
+            });
+        });
+    });
+}
+//
+var withPromise_addCircleAroundMyCurrentPosition = function (MyApp) {
+    var _deferred = new $.Deferred();
+    console.log("Inside: withPromise_addCircleAroundMyCurrentPosition() - ");
+    //
+    MyApp.MyCircleObject = new google.maps.Circle({
+        center: new google.maps.LatLng(MyApp.MyPossitionObject.latitudeValue, MyApp.MyPossitionObject.longtitudeValue),
+        radius: MyApp.scaleInputRadiusValue,
+        strokeColor: "#0000FF",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#0000FF",
+        fillOpacity: 0.4
+    });
+    //
+
+    MyApp.MyCircleObject.setMap(MyApp.MyMap);
+
+    //
+    //MyApp.MyCircleObject.bindTo('center', MyApp.MyBouncingMarker, 'position');
+    //--Date: Wednesday March-30th-2016
+    //-- added below line, and hence we have hidden
+    //-- the second inputScaler (Zoom) no longer need.
+    MyApp.MyMap.fitBounds(MyApp.MyCircleObject.getBounds());
+
+    _deferred.resolve(MyApp);
+    // return promise so that outside code cannot reject/resolve the deferred
+    return _deferred.promise();
 }
 //
 var withPromise_drawAndFillMyHTMLTable = function (MyApp) {
@@ -302,7 +401,10 @@ var withPromise_doSearchForPlacesNearByAndFillMyPlacesObjectsArray = function (M
 
     MyApp.MyGooglePlacesService.nearbySearch({
         location: new google.maps.LatLng(MyApp.MyPossitionObject.latitudeValue, MyApp.MyPossitionObject.longtitudeValue),
-        radius: MyApp.scaleInputRadiusValue
+        keyword: 'food',
+        //radius: MyApp.scaleInputRadiusValue,
+        rankBy: google.maps.places.RankBy.DISTANCE,
+        key: 'AIzaSyAMrD1y782H_DWSR-Y02QLxGzOAdFbWJP4'
     }, function (searchResultsArray, searchResultsStatus) {
         if (searchResultsStatus === google.maps.places.PlacesServiceStatus.OK) {
             withPromise_doSearch(searchResultsArray, searchResultsStatus, MyApp).done(_deferred.resolve(MyApp));
@@ -332,14 +434,8 @@ var withPromise_retriveMyCurrentPossitionValuesUsingHTML5GeolocationAndThenLoadM
         zoom: MyApp.scaleInputZoomValue,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    MyApp.MyMap = new google.maps.Map(document.getElementById("divMyMap"), MyApp.MyGoogleMapPropertiesObject);
-    MyApp.MyGooglePlacesService = new google.maps.places.PlacesService(MyApp.MyMap);
-    //
 
-    MyApp.MyBouncingMarker = new google.maps.Marker({
-        position: new google.maps.LatLng(MyApp.MyPossitionObject.latitudeValue, MyApp.MyPossitionObject.longtitudeValue),
-        animation: google.maps.Animation.BOUNCE
-    });
+    //
 
     //
     /*-----------------------------*/
@@ -553,6 +649,7 @@ function createAndLoadMyGoogleMap() {
     stopMyOverLay();
     //
 }
+
 //
 function addCircleAroundMyCurrentPosition() {
     MyApp.scaleInputRadiusValue = parseInt($('#scaleInputRadius').val());
