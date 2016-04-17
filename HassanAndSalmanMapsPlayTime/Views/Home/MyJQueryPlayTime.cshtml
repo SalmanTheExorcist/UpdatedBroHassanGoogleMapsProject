@@ -43,18 +43,20 @@
 
     <div class="form-group-sm row">
         <div class="col-sm-3">
-            <input type="button" class="btn btn-primary" id="btnLoadMyMap" value="Click Me To Render My Map" />
+            <input type="button" class="btn btn-primary hidden" id="btnLoadMyMap" value="Click Me To Render My Map" />
+            <button class="btn btn-primary" id="btnJQueryPromisesPlayTime">Click Here to Start!</button>
+            <button class="btn btn-primary hidden" id="btnJQueryPromisesPlayTime_Refresh">Click To Refresh Results</button>
         </div>
         <div class="col-sm-8 alert alert-warning">
-            <div class="modal-header">Adjust The Scales Below, Then Click On Button On Left To Render/Refresh The Map</div>
+            <div class="modal-header">Adjust The Scale Below, Then Click On Button On Left To Render The Map</div>
             <div class="form-group-sm row">
                 <label class="col-md-4 control-label" for="scaleInputRadius">Circle Radius (meters):</label>
                 <div class="col-md-8">
-                    <input id="scaleInputRadius" name="scaleInputRadius" type="range" min="100" max="5000" step="100" value="200" />
+                    <input id="scaleInputRadius" name="scaleInputRadius" type="range" min="100" max="500" step="100" value="200" />
                 </div>
             </div>
 
-            <div class="form-group-sm row ">
+            <div class="form-group-sm row hidden">
                 <label class="col-md-4 control-label" for="scaleInputZoom">Adjust Area Zoom:</label>
                 <div class="col-md-8">
                     <input id="scaleInputZoom" name="scaleInputZoom" type="range" min="16" max="20" step="1" value="16" />
@@ -71,7 +73,7 @@
             <div class="modal-header">Useful Information About My Map</div>
             <div class="row form-group-sm h6">-&nbsp;Current Position Latitude (Horizontal Lines): <label id="lblCurrentPositionLatitude"></label></div>
             <div class="row form-group-sm h6">-&nbsp;Current Position Longtitude (Vertical Lines): <label id="lblCurrentPositionLongtitude"></label></div>
-            <div class="row form-group-sm h6">-&nbsp;Bouncing Red Marker On Map Points To Your Current-Position</div>
+            <div class="row form-group-sm h6">-&nbsp;Bouncing Red Marker On Map Points To Center of the Circle</div>
             <div class="row form-group-sm h6">-&nbsp;Map Zoom Value: <label id="lblMapZoomValue"></label></div>
             <div class="row form-group-sm h6">-&nbsp;Circle Radius (meters): <label id="lblCircleRadius"></label></div>
         </div>
@@ -82,9 +84,15 @@
     <div class="row extraPadding">
         <div class="form-group">
 
-            <select class="form-control" id="drpLocationTypes"></select>
-            <br>
-            <input type="button" class="btn btn-primary" id="btnSearchNearPlaces" value="Click Me To Search Near Places" />
+            @*<select class="form-control hidden" id="drpLocationTypes"></select>
+
+                <input type="button" class="btn btn-primary hidden" id="btnSearchNearPlaces" value="Click Me To Search Near Places" />*@
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="txtSearchKeyWords" placeholder="Search Keywords" />
+            </div>
+            <div class="col-sm-4">
+                <button class="btn btn-primary hidden" id="btnJQueryPromisesPlayTime_Refresh_Two">Click To Refresh Results</button>
+            </div>
         </div>
         <div class="row">
             <table class="table  table-bordered specifictd" id="tableSearchPlacesResults">
