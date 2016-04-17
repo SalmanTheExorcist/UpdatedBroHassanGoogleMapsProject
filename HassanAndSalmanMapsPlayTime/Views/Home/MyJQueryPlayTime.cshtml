@@ -84,9 +84,15 @@
     <div class="row extraPadding">
         <div class="form-group">
 
-            <select class="form-control hidden" id="drpLocationTypes"></select>
-            <br>
-            <input type="button" class="btn btn-primary hidden" id="btnSearchNearPlaces" value="Click Me To Search Near Places" />
+            @*<select class="form-control hidden" id="drpLocationTypes"></select>
+
+                <input type="button" class="btn btn-primary hidden" id="btnSearchNearPlaces" value="Click Me To Search Near Places" />*@
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="txtSearchKeyWords" placeholder="Search Keywords" />
+            </div>
+            <div class="col-sm-4">
+                <button class="btn btn-primary hidden" id="btnJQueryPromisesPlayTime_Refresh_Two">Click To Refresh Results</button>
+            </div>
         </div>
         <div class="row">
             <table class="table  table-bordered specifictd" id="tableSearchPlacesResults">

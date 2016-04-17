@@ -146,6 +146,7 @@ function initializeMyJqueryPlayTime() {
         //
         $('#btnJQueryPromisesPlayTime').addClass('hidden');
         $('#btnJQueryPromisesPlayTime_Refresh').removeClass('hidden');
+        $('#btnJQueryPromisesPlayTime_Refresh_Two').removeClass('hidden');
         myJqueryPromisesPlayTimeFunc();
     });
     //
@@ -154,15 +155,20 @@ function initializeMyJqueryPlayTime() {
         //
         myJqueryPromisesPlayTimeFunc_with_newMarkerCoordinates();
     });
+    $('#btnJQueryPromisesPlayTime_Refresh_Two').click(function (evt) {
+        evt.preventDefault();
+        //
+        myJqueryPromisesPlayTimeFunc_with_newMarkerCoordinates();
+    });
     //
-    fillDrpLocationTypes();
+    // fillDrpLocationTypes();
     //
 
     /*------------Here let's let the magic begin: --------------*/
 
     // google.maps.event.addDomListener(window, 'load', retriveMyCurrentPossitionValuesUsingHTML5GeolocationAndThenLoadMyMap);
-    $('#btnLoadMyMap').click(retriveMyCurrentPossitionValuesUsingHTML5GeolocationAndThenLoadMyMap);
-    $('#btnSearchNearPlaces').click(doSearchForPlacesNearBy);
+    //  $('#btnLoadMyMap').click(retriveMyCurrentPossitionValuesUsingHTML5GeolocationAndThenLoadMyMap);
+    // $('#btnSearchNearPlaces').click(doSearchForPlacesNearBy);
     /*------------------------------------------------------------*/
 };
 //
@@ -426,7 +432,7 @@ var withPromise_doSearchForPlacesNearByAndFillMyPlacesObjectsArray = function (M
     MyApp.MyGooglePlacesService.nearbySearch({
         location: new google.maps.LatLng(MyApp.MyPossitionObject.latitudeValue, MyApp.MyPossitionObject.longtitudeValue),
         types: MyApp.LookupArrayPlacesTypes,
-        // keyword: 'food',
+        keyword: '' + $('#txtSearchKeyWords').val() + '',
         //radius: MyApp.scaleInputRadiusValue,
         rankBy: google.maps.places.RankBy.DISTANCE,
         key: 'AIzaSyAMrD1y782H_DWSR-Y02QLxGzOAdFbWJP4'
