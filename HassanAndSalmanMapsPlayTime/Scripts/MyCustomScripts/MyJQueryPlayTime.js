@@ -135,6 +135,8 @@ MyApp.LookupArrayPlacesTypes = [
 
 ];
 MyApp.MyPlacesObjectsArrayForHTMLTable = [];
+MyApp.MySpecificLocationMarker = null;
+MyApp.MySpecificLocationInfoWindow = null;
 //
 function initializeMyJqueryPlayTime() {
     console.log('called initializeMyJqueryPlayTime()');
@@ -145,8 +147,6 @@ function initializeMyJqueryPlayTime() {
         $('#btnJQueryPromisesPlayTime').addClass('hidden');
         $('#btnJQueryPromisesPlayTime_Refresh').removeClass('hidden');
         myJqueryPromisesPlayTimeFunc();
-
-        //
     });
     //
     $('#btnJQueryPromisesPlayTime_Refresh').click(function (evt) {
@@ -207,6 +207,7 @@ function myJqueryPromisesPlayTimeFunc_with_newMarkerCoordinates() {
                     console.log("Done with withPromise_drawAndFillMyHTMLTable - ");
                     console.log("MyApp object is now: ");
                     console.log(MyApp);
+                    displayMyMapObjectProperties(MyApp);
                     stopMyOverLay();
                 });
             });
@@ -250,6 +251,7 @@ function myJqueryPromisesPlayTimeFunc() {
                         console.log("Done with withPromise_drawAndFillMyHTMLTable - ");
                         console.log("MyApp object is now: ");
                         console.log(MyApp);
+                        displayMyMapObjectProperties(MyApp);
                         stopMyOverLay();
                     });
                 });
@@ -299,7 +301,7 @@ var withPromise_drawAndFillMyHTMLTable = function (MyApp) {
         var strTableRowHtml = "<tr>";
 
         strTableRowHtml = strTableRowHtml + "<td>" + (i + 1) + "</td>";
-        strTableRowHtml = strTableRowHtml + "<td>" + MyApp.MyPlacesObjectsArrayForHTMLTable[i].placeName + "</td>";
+        strTableRowHtml = strTableRowHtml + "<td>" + MyApp.MyPlacesObjectsArrayForHTMLTable[i].placeName + "<br/> <a class='btn btn-info' href='#' onclick='display_specificLocationMarkerAndInfoWindow(" + i + ")'>Show On Map</a></td>";
         strTableRowHtml = strTableRowHtml + "<td>" + MyApp.MyPlacesObjectsArrayForHTMLTable[i].type + "</td>";
         strTableRowHtml = strTableRowHtml + "<td>" + MyApp.MyPlacesObjectsArrayForHTMLTable[i].distanceFromCenter + "</td>";
         strTableRowHtml = strTableRowHtml + "<td>" + MyApp.MyPlacesObjectsArrayForHTMLTable[i].latitudeHorizontalLines + "</td>";
@@ -705,15 +707,22 @@ function addBouncingMarkerToMyCurrentPosition() {
 
     MyApp.MyBouncingMarker.setMap(MyApp.MyMap);
 }
-
 //
-function displayMyMapObjectProperties() {
-    $('#lblCurrentPositionLatitude').text(roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(MyApp.MyMap.getCenter().lat()));
-    $('#lblCurrentPositionLongtitude').text(roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(MyApp.MyMap.getCenter().lng()));
+function displayMyMapObjectProperties(MyApp) {
+    $('#lblCurrentPositionLatitude').text(MyApp.MyMap.getCenter().lat());
+    $('#lblCurrentPositionLongtitude').text(MyApp.MyMap.getCenter().lng());
     $('#lblMapZoomValue').text(MyApp.MyMap.zoom);
     $('#lblCircleRadius').text(MyApp.MyCircleObject.radius);
     $('#divMyMapInformation').removeClass('hidden');
 }
+//
+//function displayMyMapObjectProperties() {
+//    $('#lblCurrentPositionLatitude').text(roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(MyApp.MyMap.getCenter().lat()));
+//    $('#lblCurrentPositionLongtitude').text(roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(MyApp.MyMap.getCenter().lng()));
+//    $('#lblMapZoomValue').text(MyApp.MyMap.zoom);
+//    $('#lblCircleRadius').text(MyApp.MyCircleObject.radius);
+//    $('#divMyMapInformation').removeClass('hidden');
+//}
 //
 function roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(givenNumber) {
     return Math.round(givenNumber * 100) / 100;
@@ -729,6 +738,34 @@ function showGeoLocationErrorInConsole(browserHasGeolocation) {
     //
 }
 //
+function display_specificLocationMarkerAndInfoWindow(indexOfSepcificLocation) {
+    console.log("inside display_specificLocationMarkerAndInfoWindow() - ");
+    //MyApp.MySpecificLocationMarker = {};
+    //MyApp.MySpecificLocationInfoWindow = {};
+    if (MyApp.MySpecificLocationMarker != null) {
+        MyApp.MySpecificLocationMarker.setMap(null);
+        MyApp.MySpecificLocationInfoWindow.close();
+    }
+    MyApp.MySpecificLocationMarker = {};
+    MyApp.MySpecificLocationInfoWindow = {};
+
+    var specificLocationObject = MyApp.MyPlacesObjectsArrayForHTMLTable[indexOfSepcificLocation];
+    var contentString = "<b>" + specificLocationObject.placeName + "</b><br/> is <b>" + specificLocationObject.distanceFromCenter + "</b><br/> from center."
+    MyApp.MySpecificLocationInfoWindow = new google.maps.InfoWindow({
+        content: contentString
+    });
+
+    MyApp.MySpecificLocationMarker = new google.maps.Marker({
+        position: specificLocationObject.locationObject,
+        map: MyApp.MyMap,
+        title: '' + specificLocationObject.placeName + ''
+    });
+    MyApp.MySpecificLocationMarker.addListener('click', function () {
+        MyApp.MySpecificLocationInfoWindow.open(MyApp.MyMap, MyApp.MySpecificLocationMarker);
+    });
+    MyApp.MySpecificLocationInfoWindow.open(MyApp.MyMap, MyApp.MySpecificLocationMarker);
+}
+
 //
 //Returns Distance between two latlng objects using haversine formula
 //This is taken from: http://stackoverflow.com/questions/10726533/google-maps-api-v3-how-to-rank-by-closest-distance
