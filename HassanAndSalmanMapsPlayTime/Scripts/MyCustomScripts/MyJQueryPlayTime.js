@@ -167,11 +167,11 @@ function myJqueryPromisesPlayTimeFunc() {
 
     withPromise_retriveMyCurrentPossitionValuesUsingHTML5GeolocationAndThenLoadMyMap(MyApp).done(function () {
         withPromise_doSearchForPlacesNearByAndFillMyPlacesObjectsArray(MyApp).done(function () {
-            withPromise_fillDistancesValuesFromGoogleGeometry(MyApp).done(function (results) {
+            withPromise_fillDistancesValuesFromGoogleGeometry(MyApp).done(function (resultsArray) {
                 console.log("MyApp object is now: ");
-                // console.log(MyApp);
-                console.log("results: ");
-                console.log(results);
+                console.log(MyApp);
+                console.log("resultsArray: ");
+                console.log(resultsArray);
                 stopMyOverLay();
             });
             //
@@ -214,7 +214,7 @@ var withPromise_fillDistancesValuesFromGoogleGeometry = function (MyApp) {
         _myPromisesArray.push(_def);
     });
 
-    return $.when.apply(undefined, _myPromisesArray).promise();
+    return $.when.apply($, _myPromisesArray).then(function () { return arguments });
 
     //  return $.when.apply(undefined, _myPromisesArray).promise();
 
@@ -239,7 +239,10 @@ var withPromise_doSearch = function (searchResultsArray, searchResultsStatus, My
 
     console.log("Inside: withPromise_doSearch()");
     //looping through the Array-Of-Places Results
-    $.each(searchResultsArray, function (key, value) {
+    for (var j = 0; j < 2; j++) {
+        var key = j;
+        var value = searchResultsArray[j];
+        //$.each(searchResultsArray, function (key, value) {
         MyApp.MyPlacesObjectsArrayForHTMLTable.push({
             id: "" + key + "",
             place_id: value.place_id,
@@ -250,7 +253,7 @@ var withPromise_doSearch = function (searchResultsArray, searchResultsStatus, My
             longtitudeVerticalLines: "" + roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(value.geometry.location.lng()) + ""
         }
     )
-    });
+    };
     //
 
     // return promise so that outside code cannot reject/resolve the deferred
