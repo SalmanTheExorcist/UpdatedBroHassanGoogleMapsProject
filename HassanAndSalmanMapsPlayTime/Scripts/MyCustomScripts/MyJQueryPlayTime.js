@@ -167,18 +167,54 @@ function myJqueryPromisesPlayTimeFunc() {
 
     withPromise_retriveMyCurrentPossitionValuesUsingHTML5GeolocationAndThenLoadMyMap(MyApp).done(function () {
         withPromise_doSearchForPlacesNearByAndFillMyPlacesObjectsArray(MyApp).done(function () {
-            withPromise_fillDistancesValuesFromGoogleGeometry(MyApp).done(function (resultsArray) {
-                console.log("MyApp object is now: ");
-                console.log(MyApp);
-                console.log("resultsArray: ");
-                console.log(resultsArray);
-                stopMyOverLay();
+            withPromise_fillDistancesValuesFromGoogleGeometry(MyApp).done(function (resultsDistancesArray) {
+                //console.log("MyApp object is now: ");
+                //console.log(MyApp);
+                //console.log("resultsDistancesArray: ");
+                //console.log(resultsDistancesArray);
+
+                $.each(resultsDistancesArray, function (key, value) {
+                    MyApp.MyPlacesObjectsArrayForHTMLTable[key].distanceFromCenter = value + " meters";
+                });
+
+                withPromise_drawAndFillMyHTMLTable(MyApp).done(function () {
+                    console.log("Done with withPromise_drawAndFillMyHTMLTable - ");
+                    console.log("MyApp object is now: ");
+                    console.log(MyApp);
+                    stopMyOverLay();
+                });
             });
             //
         });
     });
 }
 //
+var withPromise_drawAndFillMyHTMLTable = function (MyApp) {
+    var _deferred = new $.Deferred();
+    console.log("Inside: withPromise_drawAndFillMyHTMLTable() - ");
+
+    $('#tableSearchPlacesResults > tbody').empty();
+    $('#lblSearchResultsCount').text("Found ( 0 ) Points-Of-Interests");
+    //
+    for (var i = 0; i < MyApp.MyPlacesObjectsArrayForHTMLTable.length; i++) {
+        var strTableRowHtml = "<tr>";
+
+        strTableRowHtml = strTableRowHtml + "<td>" + (i + 1) + "</td>";
+        strTableRowHtml = strTableRowHtml + "<td>" + MyApp.MyPlacesObjectsArrayForHTMLTable[i].placeName + "</td>";
+        strTableRowHtml = strTableRowHtml + "<td>" + MyApp.MyPlacesObjectsArrayForHTMLTable[i].type + "</td>";
+        strTableRowHtml = strTableRowHtml + "<td>" + MyApp.MyPlacesObjectsArrayForHTMLTable[i].distanceFromCenter + "</td>";
+        strTableRowHtml = strTableRowHtml + "<td>" + MyApp.MyPlacesObjectsArrayForHTMLTable[i].latitudeHorizontalLines + "</td>";
+        strTableRowHtml = strTableRowHtml + "<td>" + MyApp.MyPlacesObjectsArrayForHTMLTable[i].longtitudeVerticalLines + "</td>";
+        strTableRowHtml = strTableRowHtml + "</tr>";
+        $('#tableSearchPlacesResults > tbody').append(strTableRowHtml);
+    }
+
+    $('#lblSearchResultsCount').text("Displaying Below (" + MyApp.MyPlacesObjectsArrayForHTMLTable.length + ") Points-Of-Interests");
+    //
+    _deferred.resolve(MyApp);
+    // return promise so that outside code cannot reject/resolve the deferred
+    return _deferred.promise();
+}
 var withPromise_fillDistancesValuesFromGoogleGeometry = function (MyApp) {
     // var _deferredMaster = new $.Deferred();
     var _myPromisesArray = [];
