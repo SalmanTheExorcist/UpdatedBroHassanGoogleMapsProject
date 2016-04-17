@@ -3,135 +3,135 @@
 //
 var MyApp = {};
 MyApp.LookupArrayPlacesTypes = [
-    "accounting",
-    "airport",
-    "amusement_park",
-    "aquarium",
-    "art_gallery",
-    "atm",
-    "bakery",
-    "bank",
-    "bar",
-    "beauty_salon",
-    "bicycle_store",
-    "book_store",
-    "bowling_alley",
-    "bus_station",
-    "cafe",
-    "campground",
-    "car_dealer",
-    "car_rental",
-    "car_repair",
-    "car_wash",
-    "casino",
-    "cemetery",
-    "church",
-    "city_hall",
-    "clothing_store",
-    "convenience_store",
-    "courthouse",
-    "dentist",
-    "department_store",
-    "doctor",
-    "electrician",
-    "electronics_store",
-    "embassy",
-    "fire_station",
-    "florist",
-    "funeral_home",
-    "furniture_store",
-    "gas_station",
-    "grocery_or_supermarket",
-    "gym",
-    "hair_care",
-    "hardware_store",
-    "hindu_temple",
-    "home_goods_store",
-    "hospital",
-    "insurance_agency",
-    "jewelry_store",
-    "laundry",
-    "lawyer",
-    "library",
-    "liquor_store",
-    "local_government_office",
-    "locksmith",
-    "lodging",
-    "meal_delivery",
-    "meal_takeaway",
-    "mosque",
-    "movie_rental",
-    "movie_theater",
-    "moving_company",
-    "museum",
-    "night_club",
-    "painter",
-    "park",
-    "parking",
-    "pet_store",
-    "pharmacy",
-    "physiotherapist",
-    "plumber",
-    "police",
-    "post_office",
-    "real_estate_agency",
-    "restaurant",
-    "roofing_contractor",
-    "rv_park",
-    "school",
-    "shoe_store",
-    "shopping_mall",
-    "spa",
-    "stadium",
-    "storage",
-    "store",
-    "subway_station",
-    "synagogue",
-    "taxi_stand",
-    "train_station",
-    "transit_station",
-    "travel_agency",
-    "university",
-    "veterinary_care",
-    "zoo",
-    "administrative_area_level_1",
-    "administrative_area_level_2",
-    "administrative_area_level_3",
-    "administrative_area_level_4",
-    "administrative_area_level_5",
-    "colloquial_area",
-    "country",
-    "establishment",
-    "finance",
-    "floor",
-    "food",
-    "general_contractor",
-    "geocode",
-    "health",
-    "intersection",
-    "locality",
-    "natural_feature",
-    "neighborhood",
-    "place_of_worship",
-    "political",
-    "point_of_interest",
-    "post_box",
-    "postal_code",
-    "postal_code_prefix",
-    "postal_code_suffix",
-    "postal_town",
-    "premise",
-    "room",
-    "route",
-    "street_address",
-    "street_number",
-    "sublocality",
-    "sublocality_level_4",
-    "sublocality_level_5",
-    "sublocality_level_3",
-    "sublocality_level_2",
-    "sublocality_level_1",
-    "subpremise"
+    'accounting',
+    'airport',
+    'amusement_park',
+    'aquarium',
+    'art_gallery',
+    'atm',
+    'bakery',
+    'bank',
+    'bar',
+    'beauty_salon',
+    'bicycle_store',
+    'book_store',
+    'bowling_alley',
+    'bus_station',
+    'cafe',
+    'campground',
+    'car_dealer',
+    'car_rental',
+    'car_repair',
+    'car_wash',
+    'casino',
+    'cemetery',
+    'church',
+    'city_hall',
+    'clothing_store',
+    'convenience_store',
+    'courthouse',
+    'dentist',
+    'department_store',
+    'doctor',
+    'electrician',
+    'electronics_store',
+    'embassy',
+    'fire_station',
+    'florist',
+    'funeral_home',
+    'furniture_store',
+    'gas_station',
+    'grocery_or_supermarket',
+    'gym',
+    'hair_care',
+    'hardware_store',
+    'hindu_temple',
+    'home_goods_store',
+    'hospital',
+    'insurance_agency',
+    'jewelry_store',
+    'laundry',
+    'lawyer',
+    'library',
+    'liquor_store',
+    'local_government_office',
+    'locksmith',
+    'lodging',
+    'meal_delivery',
+    'meal_takeaway',
+    'mosque',
+    'movie_rental',
+    'movie_theater',
+    'moving_company',
+    'museum',
+    'night_club',
+    'painter',
+    'park',
+    'parking',
+    'pet_store',
+    'pharmacy',
+    'physiotherapist',
+    'plumber',
+    'police',
+    'post_office',
+    'real_estate_agency',
+    'restaurant',
+    'roofing_contractor',
+    'rv_park',
+    'school',
+    'shoe_store',
+    'shopping_mall',
+    'spa',
+    'stadium',
+    'storage',
+    'store',
+    'subway_station',
+    'synagogue',
+    'taxi_stand',
+    'train_station',
+    'transit_station',
+    'travel_agency',
+    'university',
+    'veterinary_care',
+    'zoo',
+    'administrative_area_level_1',
+    'administrative_area_level_2',
+    'administrative_area_level_3',
+    'administrative_area_level_4',
+    'administrative_area_level_5',
+    'colloquial_area',
+    'country',
+    'establishment',
+    'finance',
+    'floor',
+    'food',
+    'general_contractor',
+    'geocode',
+    'health',
+    'intersection',
+    'locality',
+    'natural_feature',
+    'neighborhood',
+    'place_of_worship',
+    'political',
+    'point_of_interest',
+    'post_box',
+    'postal_code',
+    'postal_code_prefix',
+    'postal_code_suffix',
+    'postal_town',
+    'premise',
+    'room',
+    'route',
+    'street_address',
+    'street_number',
+    'sublocality',
+    'sublocality_level_4',
+    'sublocality_level_5',
+    'sublocality_level_3',
+    'sublocality_level_2',
+    'sublocality_level_1',
+    'subpremise'
 
 ];
 MyApp.MyPlacesObjectsArrayForHTMLTable = [];
@@ -198,9 +198,9 @@ function myJqueryPromisesPlayTimeFunc_with_newMarkerCoordinates() {
         MyApp.MyPlacesObjectsArrayForHTMLTable = [];
 
         withPromise_doSearchForPlacesNearByAndFillMyPlacesObjectsArray(MyApp).done(function () {
-            withPromise_fillDistancesValuesFromGoogleGeometry(MyApp).done(function (resultsDistancesArray) {
+            withPromise_fillDistancesValuesUsingDistanceFormula(MyApp).done(function (resultsDistancesArray) {
                 $.each(resultsDistancesArray, function (key, value) {
-                    MyApp.MyPlacesObjectsArrayForHTMLTable[key].distanceFromCenter = value + " meters";
+                    MyApp.MyPlacesObjectsArrayForHTMLTable[key].distanceFromCenter = roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(value) + " meters";
                 });
 
                 withPromise_drawAndFillMyHTMLTable(MyApp).done(function () {
@@ -236,14 +236,14 @@ function myJqueryPromisesPlayTimeFunc() {
             MyApp.MyPlacesObjectsArrayForHTMLTable = [];
 
             withPromise_doSearchForPlacesNearByAndFillMyPlacesObjectsArray(MyApp).done(function () {
-                withPromise_fillDistancesValuesFromGoogleGeometry(MyApp).done(function (resultsDistancesArray) {
+                withPromise_fillDistancesValuesUsingDistanceFormula(MyApp).done(function (resultsDistancesArray) {
                     //console.log("MyApp object is now: ");
                     //console.log(MyApp);
                     //console.log("resultsDistancesArray: ");
                     //console.log(resultsDistancesArray);
 
                     $.each(resultsDistancesArray, function (key, value) {
-                        MyApp.MyPlacesObjectsArrayForHTMLTable[key].distanceFromCenter = value + " meters";
+                        MyApp.MyPlacesObjectsArrayForHTMLTable[key].distanceFromCenter = roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(value) + " meters";
                     });
 
                     withPromise_drawAndFillMyHTMLTable(MyApp).done(function () {
@@ -314,6 +314,27 @@ var withPromise_drawAndFillMyHTMLTable = function (MyApp) {
     // return promise so that outside code cannot reject/resolve the deferred
     return _deferred.promise();
 }
+//
+var withPromise_fillDistancesValuesUsingDistanceFormula = function (MyApp) {
+    var _myPromisesArray = [];
+
+    $.each(MyApp.MyPlacesObjectsArrayForHTMLTable, function (key, value) {
+        var _def = new $.Deferred();
+
+        /*-----------------------------------------------*/
+
+        var myDistance = distance(value.locationObject, MyApp.MyBouncingMarker.position);
+
+        _def.resolve(myDistance);
+
+        /*-----------------------------------------------*/
+
+        _myPromisesArray.push(_def);
+    });
+
+    return $.when.apply($, _myPromisesArray).then(function () { return arguments });
+}
+//
 var withPromise_fillDistancesValuesFromGoogleGeometry = function (MyApp) {
     // var _deferredMaster = new $.Deferred();
     var _myPromisesArray = [];
@@ -385,7 +406,8 @@ var withPromise_doSearch = function (searchResultsArray, searchResultsStatus, My
             type: "" + getStringLocationsConcatenatedFromArray(value.types) + "",
             distanceFromCenter: "--- meters",
             latitudeHorizontalLines: "" + roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(value.geometry.location.lat()) + "",
-            longtitudeVerticalLines: "" + roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(value.geometry.location.lng()) + ""
+            longtitudeVerticalLines: "" + roundTheNumberToTwoDecimalPlacesAndReturnTheNewValue(value.geometry.location.lng()) + "",
+            locationObject: value.geometry.location
         }
     )
     };
@@ -401,7 +423,8 @@ var withPromise_doSearchForPlacesNearByAndFillMyPlacesObjectsArray = function (M
 
     MyApp.MyGooglePlacesService.nearbySearch({
         location: new google.maps.LatLng(MyApp.MyPossitionObject.latitudeValue, MyApp.MyPossitionObject.longtitudeValue),
-        keyword: 'food',
+        types: MyApp.LookupArrayPlacesTypes,
+        // keyword: 'food',
         //radius: MyApp.scaleInputRadiusValue,
         rankBy: google.maps.places.RankBy.DISTANCE,
         key: 'AIzaSyAMrD1y782H_DWSR-Y02QLxGzOAdFbWJP4'
@@ -706,7 +729,25 @@ function showGeoLocationErrorInConsole(browserHasGeolocation) {
     //
 }
 //
-
+//
+//Returns Distance between two latlng objects using haversine formula
+//This is taken from: http://stackoverflow.com/questions/10726533/google-maps-api-v3-how-to-rank-by-closest-distance
+//
+function distance(p1, p2) {
+    if (!p1 || !p2)
+        return 0;
+    var R = 6371000; // Radius of the Earth in m
+    var dLat = (p2.lat() - p1.lat()) * Math.PI / 180;
+    var dLon = (p2.lng() - p1.lng()) * Math.PI / 180;
+    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(p1.lat() * Math.PI / 180) * Math.cos(p2.lat() * Math.PI / 180) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    var d = R * c;
+    return d;
+}
+//
+//
 function showMyOverLay() {
     $(".myBigPageRowForOverLay").plainOverlay('show');
 }
